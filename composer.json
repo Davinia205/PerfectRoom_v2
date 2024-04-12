@@ -1,0 +1,27 @@
+{
+    "name": "davinia/davinia",
+    "description": "PerfectRoom",
+    "type": "project",
+    "license": "GPL",
+    "autoload": {
+        "psr-4": {
+            "Clases\\": "src"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "allow-plugins": {
+            "kylekatarnls/update-helper": true
+        }
+    },
+    "authors": [
+        {
+            "name": "Davinia Mut",
+            "email": "davinia.mut@gmail.com"
+        }
+    ],
+    "require": {
+        "philo/laravel-blade": " 3.1"
+
+    }
+}
