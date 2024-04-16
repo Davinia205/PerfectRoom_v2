@@ -17,7 +17,7 @@ class Conexion
     public function __construct()
     {
         $this->host = "localhost";
-        $this->db = "PerfectRoom";
+        $this->db = "perfectroom";
         $this->username = "gestor";
         $this->password = "secreto";
         $this->dsn = "mysql:host={$this->host};dbname={$this->db};charset=utf8mb4";
