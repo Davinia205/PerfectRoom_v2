@@ -16,7 +16,7 @@ class Inspeccion_ocupada extends Conexion{
     public $camas;
     public $polvo;
     public $suelo;
-    public $baño;
+    public $servicio;
     public $toallas;
     public $minibar;
     public $amenities;
@@ -30,34 +30,108 @@ class Inspeccion_ocupada extends Conexion{
         parent::__construct();
     }
 
-    // public function getId(){
-    //     return $this->id;
-    // }
-    // public function setId($id){
-    //     $this->id=$valorId;
-    // }
+    public function getid_habitacion(){
+        return $this->id_habitacion;
+    }
+    public function setid_habitacion($id_habitacion){
+        $this->id_habitacion=$id_habitacion;
+    }
+
+    public function getropa_sucia(){
+        return $this->ropa_sucia;
+    }
+    public function setropa_sucia($ropa_sucia){
+        $this->ropa_sucia=$ropa_sucia;
+    }
+
+    public function getpapeleras(){
+        return $this->papeleras;
+    }
+    public function setpapeleras($papeleras){
+        $this->papeleras=$papeleras;
+    }
+
+    public function getcamas(){
+        return $this->camas;
+    }
+    public function setcamas($camas){
+        $this->camas=$camas;
+    }
+
+    public function getpolvo(){
+        return $this->polvo;
+    }
+    public function setpolvo($polvo){
+        $this->polvo=$polvo;
+    }
+    public function getsuelo(){
+        return $this->id_habitacion;
+    }
+    public function setsuelo($suelo){
+        $this->suelo=$suelo;
+    }
+    public function getservicio(){
+        return $this->servicio;
+    }
+    public function setservicio($servicio){
+        $this->servicio=$servicio;
+    }
+    public function gettoallas(){
+        return $this->toallas;
+    }
+    public function settoallas($toallas){
+        $this->toallas=$toallas;
+    }
+    public function getminibar(){
+        return $this->minibar;
+    }
+    public function setminibar($minibar){
+        $this->minibar=$minibar;
+    }
+    public function getamenities(){
+        return $this->amenities;
+    }
+    public function setamenities($amenities){
+        $this->amenities=$amenities;
+    }
+    public function getolor(){
+        return $this->olor;
+    }
+    public function setolor($olor){
+        $this->olor=$olor;
+    }
+    public function getusuario(){
+        return $this->usuario;
+    }
+    public function setusuario($usuario){
+        $this->usuario=$usuario;
+    }
+
 
     public function insertar_inspeccion_ocupada() {
         try {
-            $sql = "INSERT INTO checklist_ocupada (id_habitacion, ropa_sucia, papeleras, camas, polvo, suelo, baño, toallas, minibar, amenities, olor, usuario) 
-                    VALUES (:id_habitacion, :ropa_sucia, :papeleras, :camas, :polvo, :suelo, :baño, :toallas, :minibar, :amenities, :olor, :usuario)";
+            $sql = "INSERT INTO checklist_ocupada (id_habitacion, ropa_sucia, papeleras, camas, polvo, suelo, toallas, minibar, amenities, olor, usuario, servicio) 
+                    VALUES (:id_habitacion, :ropa_sucia, :papeleras, :camas, :polvo, :suelo, :toallas, :minibar, :amenities, :olor, :usuario, :servicio)";
             
             $stmt = $this->conexion->prepare($sql);
             
-            $stmt->bindParam(':id_habitacion', $id_habitacion,PDO::PARAM_INT);
-            $stmt->bindParam(':ropa_sucia', $ropa_sucia, PDO::PARAM_INT);
-            $stmt->bindParam(':papeleras', $papeleras, PDO::PARAM_INT);
-            $stmt->bindParam(':camas', $camas, PDO::PARAM_INT);
-            $stmt->bindParam(':polvo', $polvo, PDO::PARAM_INT);
-            $stmt->bindParam(':suelo', $suelo, PDO::PARAM_INT);
-            $stmt->bindParam(':baño', $baño,PDO::PARAM_INT);
-            $stmt->bindParam(':toallas', $toallas, PDO::PARAM_INT);
-            $stmt->bindParam(':minibar', $minibar, PDO::PARAM_INT);
-            $stmt->bindParam(':amenities', $amenities, PDO::PARAM_INT);
-            $stmt->bindParam(':olor', $olor, PDO::PARAM_INT);
-            $stmt->bindParam(':usuario', $usuario, PDO::PARAM_STR);
-            
-            $stmt->execute();
+                $stmt->execute([
+
+
+                    ':id_habitacion' => $this->id_habitacion,
+                    ':ropa_sucia' => $this ->ropa_sucia,
+                    ':papeleras' => $this->papeleras,
+                    ':camas' => $this->camas,
+                    ':polvo'=> $this->polvo,
+                    ':suelo'=> $this->suelo,
+                    ':toallas'=> $this->toallas,
+                    ':minibar'=>$this->minibar,
+                    ':amenities' => $this->amenities,
+                    ':olor' =>$this->olor,
+                    ':usuario' => $this->usuario,
+                    ':servicio'=>$this->servicio,
+
+                ]);
             
             echo "Datos insertados correctamente en la tabla checklist_ocupada";
         } catch (PDOException $e) {

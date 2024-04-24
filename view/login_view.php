@@ -27,7 +27,7 @@
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
-.login-container h2 {
+.login-container h2, h1 {
     text-align: center;
     margin-bottom: 20px;
 }
@@ -45,7 +45,7 @@
     padding: 10px;
     border: none;
     border-radius: 4px;
-    background-color: #007bff;
+    background-color: #0DCAF0;
     color: #fff;
     font-size: 16px;
     cursor: pointer;
@@ -61,14 +61,15 @@
     <title>Iniciar sesión</title>
 </head>
 <div class="login-container">
-    <body>
-    <div class="login-container">
-        <h2>Iniciar sesión</h2>
+    <body>   
+<h1>PerfectRoom</h1>
+
         <form method="POST">
         <input type="hidden" name="action" value="login">
             <input type="text" name="username" id= "username" placeholder="Usuario" required>
             <input type="password" name="password" id="password" placeholder="Contraseña" required>
-            <button type="submit" >Iniciar sesión</button>
+            <button type="submit" class="btn btn-info" role="button">Iniciar sesión</button>
+
         </form>
     </div>
 </body>

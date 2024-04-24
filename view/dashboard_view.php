@@ -9,15 +9,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-    <a href="inspeccion_ocupada.php">+ Nueva Inspeccion habitación ocupada</a>
+    <a href="../public/inspeccion_ocupada.php">+ Nueva Inspeccion habitación ocupada</a>
     <br></br>
     <br></br>
-    <a href="inspeccion_salida.php">+ Nueva Inspeccion habitación salida</a>
+    <a href="../public/inspeccion_salida.php">+ Nueva Inspeccion habitación salida</a>
     <br></br>
     <br></br>
     <a href="status.php">+ Estado Habitaciones</a>
     <br></br>
     <br></br>
-    <a href="crearUsuario.php">+ Crear Usuario</a>
+    <a href="../public/crearUsuario.php">+ Crear Usuario</a>
 </body>
 </head>

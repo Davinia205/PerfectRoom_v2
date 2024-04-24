@@ -27,6 +27,8 @@ if (isset($_SESSION['username'])) {
     echo "Usuario no autenticado";
 }
 
+
+
 echo $blade
 ->view()
 ->make('dashboard_view')
