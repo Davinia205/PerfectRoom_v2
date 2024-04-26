@@ -72,7 +72,15 @@
 
         </form>
     </div>
-</body>
+    <div>
+    <?php if(isset($error)): ?>
+        <div class="alert alert-danger h-100 mt-3">
+            <p><?php echo e($error); ?></p>
+            <p><?php echo e($mensaje); ?></p>
+        </div>
+    <?php endif; ?>
+    </div>
 
 </body>
+
 </html>

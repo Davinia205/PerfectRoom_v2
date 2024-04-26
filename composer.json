@@ -19,9 +19,5 @@
             "name": "Davinia Mut",
             "email": "davinia.mut@gmail.com"
         }
-    ],
-    "require": {
-        "philo/laravel-blade": " 3.1"
-
-    }
+    ]
 }

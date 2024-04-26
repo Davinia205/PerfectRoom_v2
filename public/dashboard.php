@@ -1,18 +1,15 @@
 <?php 
 
-use Clases\Usuario;
+
+include("../views/dashboard_view.php");
 
 require '../vendor/autoload.php';
 
 use Clases\Conexion;
-use Philo\Blade\Blade;
+
 
 session_start();
 
-
-$views = '../view';
-$cache = '../cache';
-$blade = new Blade($views, $cache);
 
 $conn = new Conexion();
 $conn->crearConexion();
@@ -28,9 +25,4 @@ if (isset($_SESSION['username'])) {
 }
 
 
-
-echo $blade
-->view()
-->make('dashboard_view')
-->render();
-
+header('Location: ../views/dashboard_view.php');
