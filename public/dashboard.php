@@ -1,28 +1,26 @@
 <?php 
 
 
-include("../views/dashboard_view.php");
-
 require '../vendor/autoload.php';
 
 use Clases\Conexion;
 
 
 session_start();
+echo "<p><center>Bienvenido/a ".$_SESSION['username']."</center></p>";
+
+include ("../views/dashboard_view.php");
 
 
 $conn = new Conexion();
 $conn->crearConexion();
 
-if (isset($_SESSION['username'])) {
-    $usuarioRegistrado = $_SESSION['username'];
-    // Ahora puedes usar $username en esta página
-    echo "Hola, $usuarioRegistrado <br></br>";
-
-} else {
-    // La variable de sesión no está establecida, manejar la situación
-    echo "Usuario no autenticado";
+if (!isset($_SESSION['username'])) {
+    // Redirigir a la página de login
+    header("Location: login.php");
+    exit; // Asegurarse de que el script se detenga después de redirigir
 }
 
 
-header('Location: ../views/dashboard_view.php');
+
+

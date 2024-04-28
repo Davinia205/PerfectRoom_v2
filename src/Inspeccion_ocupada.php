@@ -135,11 +135,45 @@ class Inspeccion_ocupada extends Conexion{
             
             echo "Datos insertados correctamente en la tabla checklist_ocupada";
         } catch (PDOException $e) {
-            die("Error al insertar datos: " . $e->getMessage());
+            die("Error al insertar datos");
+            #die("Error al insertar datos: " . $e->getMessage());
         }
     }
 
- 
+    public function isValido($u)
+    {
+        $pass1 = hash('sha256', $u);
+        $consulta = "select * from usuarios where usuario=:u";
+        $stmt = $this->conexion->prepare($consulta);
+        try {
+            $stmt->execute([
+                ':u' => $u,
+            
+            ]);
+        } catch (PDOException $ex) {
+            die("Error al consultar usuario: " . $ex->getMessage());
+        }
+        if ($stmt->rowCount() == 0) return false;
+        return true;
+    }
+
+    public function updateHabitaciones($id_habitacion){
+
+        try {
+            $sql = "UPDATE habitaciones SET estado = 'ok' WHERE (id_habitacion = :id_habitacion)";
+                
+            $stmt = $this->conexion->prepare($sql);
+            
+                $stmt->execute([
+
+
+                    ':id_habitacion' => $this->id_habitacion]);
+        }
+        catch (PDOException $ex) {
+            die("Error al actualizar estado: " . $ex->getMessage());
+    }
+
+}
     
 }
 

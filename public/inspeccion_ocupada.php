@@ -3,13 +3,12 @@ require '../vendor/autoload.php';
 use Clases\Inspeccion_ocupada;
 
 
-use Philo\Blade\Blade;
-
 
 session_start();
+echo "<br></br>";
+echo "<p><center>Bienvenido/a ".$_SESSION['username']."</center></p>";
 
-echo "<p>Bienvenido/a</p>".$_SESSION['username'];
-
+include ("../views/inspeccion_ocupada_view.php");
 if (!isset($_SESSION['username'])) {
     // Redirigir a la página de login
     header("Location: login.php");
@@ -17,18 +16,9 @@ if (!isset($_SESSION['username'])) {
 }
 
 
-$views = '../view';
-$cache = '../cache';
-$blade = new Blade($views, $cache);
 
-
- echo $blade
-->view()
-->make('inspeccion_ocupada_view')
-->render();
-
-
-if (isset($_POST['enviar'])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+// if (isset($_POST['enviar'])) {
     #recogemos los datos del formulario, trimamos las cadenas
     $id_habitacion = trim($_POST['id_habitacion']);
     $ropa_sucia= trim($_POST['ropa_sucia']);
@@ -72,8 +62,25 @@ if (isset($_POST['enviar'])) {
     // print($minibar);
     // print($amenities);
     // print($olor);
+
+    if ($inspeccion_ocupada->isValido($usuario)) {
+        
     
     $inspeccion_ocupada-> insertar_inspeccion_ocupada();
+    $inspeccion_ocupada-> updateHabitaciones($id_habitacion);
+     
+    } else {
+            // Credenciales incorrectas, mostrar mensaje de error en el formulario
+    
+        echo '<script>
+                    document.getElementById("errorMessage").textContent = "Usuario no existe. Por favor, intenta de nuevo.";
+                    document.getElementById("errorMessage").style.display = "block";
+                  </script>';
+     
+    
+    }
+
+
     
 
     

@@ -177,9 +177,9 @@ return $this;
 /**
  * Get the value of objectos
  */ 
-public function getObjectos()
+public function getObjetos()
 {
-return $this->objectos;
+return $this->objetos;
 }
 
 /**
@@ -187,9 +187,9 @@ return $this->objectos;
  *
  * @return  self
  */ 
-public function setObjectos($objetos)
+public function setObjetos($objetos)
 {
-$this->objectos = $objetos;
+$this->objetos = $objetos;
 
 return $this;
 }
@@ -344,10 +344,40 @@ public function insertar_inspeccion_salida() {
 }
 
 
+public function isValido($u)
+{
+    $pass1 = hash('sha256', $u);
+    $consulta = "select * from usuarios where usuario=:u";
+    $stmt = $this->conexion->prepare($consulta);
+    try {
+        $stmt->execute([
+            ':u' => $u,
+        
+        ]);
+    } catch (PDOException $ex) {
+        die("Error al consultar usuario: " . $ex->getMessage());
+    }
+    if ($stmt->rowCount() == 0) return false;
+    return true;
+}
 
-/**
- * Get the value of telefono
- */ 
+public function updateHabitaciones($id_habitacion){
+
+    try {
+        $sql = "UPDATE habitaciones SET estado = 'ok' WHERE (id_habitacion = :id_habitacion)";
+            
+        $stmt = $this->conexion->prepare($sql);
+        
+            $stmt->execute([
+
+
+                ':id_habitacion' => $this->id_habitacion]);
+    }
+    catch (PDOException $ex) {
+        die("Error al actualizar estado: " . $ex->getMessage());
+}
+
+}
 
 }
 

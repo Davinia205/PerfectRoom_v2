@@ -1,7 +1,7 @@
 <?php
 require '../vendor/autoload.php';
 
-include("../views/login_view.php");
+include ("../views/login_view.php");
 
 use Clases\Usuario;
 use Clases\Conexion;
@@ -17,45 +17,30 @@ $conn->crearConexion();
 $us = new Usuario();
 
 
-
-if (isset($_POST['action']) && $_POST['action'] === 'login') {
+if ($_SERVER["REQUEST_METHOD"] == "POST")
+{
     $username = trim($_POST['username']);
     $password = trim($_POST['password']);
-    if (strlen($username) == 0 || strlen($password) == 0) {
-        $_SESSION['error'] = "Error, El nombre o la contraseña no pueden contener solo espacios en blancos.";
-    }
+    $id_hotel = trim($_POST['id_hotel']);
 
-    if ($us->isValido($username, $password)) {
-        $_SESSION['username'] = $username;
-        #echo $_SESSION['nombre'];
-        header('Location: dashboard.php');
-        die();
-    } else {
-        $mensaje = $_SESSION['error'] ;
-        $_SESSION['error'] = "Credenciales inválidas";
-        header('Location: login.php?mensaje=' . urlencode($mensaje));
-        exit;
-        // echo $blade
-        //    ->view()
-        //   ->make('login_view',  compact('mensaje'))
-        //     ->render();
 
-    }
+if ($us->isValido($username, $password, $id_hotel)) {
+    $_SESSION['username'] = $username;
+    $_SESSION['id_hotel'] = $id_hotel;
+    header('Location: dashboard.php');
+    die();
+} else {
+        // Credenciales incorrectas, mostrar mensaje de error en el formulario
+
+    echo '<script>
+                document.getElementById("errorMessage").textContent = "Usuario incorrecto. Por favor, intenta de nuevo.";
+                document.getElementById("errorMessage").style.display = "block";
+              </script>';
+ 
+
 }
 
-
-    // echo $blade
-    //     ->view()
-    //     ->make('login_view')
-    //     ->render();
-
-
-    //     if (isset($_SESSION['error'])) {
-    //         echo "<div class='mt-3 text-danger font-weight-bold text-lg'>";
-    //         echo $_SESSION['error'];
-    //         unset($_SESSION['error']);
-    //         echo "</div>";
-    //     }
-        
-        // Cerrar la conexión a la base de datos al finalizar
+// Cerrar la conexión a la base de datos al finalizar
 $conn->cerrar($conn);
+
+}

@@ -3,13 +3,11 @@ require '../vendor/autoload.php';
 use Clases\Usuario;
 
 
-use Philo\Blade\Blade;
-
-
-
 session_start();
 
-echo "<p>Bienvenido/a</p>" . $_SESSION['username'];
+echo "<p><center>Bienvenido/a ".$_SESSION['username']."</center></p>";
+include ("../views/crear_usuario_view.php");
+
 
 if (!isset($_SESSION['username'])) {
     // Redirigir a la página de login
@@ -17,20 +15,7 @@ if (!isset($_SESSION['username'])) {
     exit; // Asegurarse de que el script se detenga después de redirigir
 }
 
-
-$views = '../view';
-$cache = '../cache';
-$blade = new Blade($views, $cache);
-
-
-echo $blade
-    ->view()
-    ->make('crear_usuario_view')
-    ->render();
-
-
-
-if (isset($_POST['action']) && $_POST['action'] === 'crear') {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     #recogemos los datos del formulario, trimamos las cadenas
     $username = trim($_POST['username']);
     $password = trim($_POST['password']);
@@ -39,10 +24,11 @@ if (isset($_POST['action']) && $_POST['action'] === 'crear') {
     $id_empleado = trim($_POST['id_empleado']);
     $tipo = trim($_POST['tipo']);
     $cargo = trim($_POST['cargo']);
+    $id_hotel= trim($_POST['id_hotel']);
 
 
     $usu = new Usuario();
-    
+
     $usu->setusername($username);
     $usu->setpassword($password);
     $usu->setNombre($nombre);
@@ -50,19 +36,24 @@ if (isset($_POST['action']) && $_POST['action'] === 'crear') {
     $usu->setId_empleado($id_empleado);
     $usu->settipo($tipo);
     $usu->setcargo($cargo);
+    $usu->setId_hotel($id_hotel);
+
+
+    if ($usu->existeUsuario($username) && $usu-> existeHotel($id_empleado) && $usu-> existeIdEmpleado($id_empleado))
+    #var_dump($resultado);
+     {
+        $usu->crearUsuario();
+        echo "Usuario creado correctamente";
+      } else{
+       
+        echo '<script>
+                document.getElementById("errorMessage").textContent = "Revise los datos introducidos";
+                document.getElementById("errorMessage").style.display = "block";
+              </script>';
+    }
+
 
 }
- 
-    $resultado = $usu->existeUsuario($username);
-    #var_dump($resultado);
-
-    if ($resultado){
-        echo "El usuario ya existe";
-    }
-    else{
-    $usu->crearUsuario();
-    echo "Usuario creado correctamente";
-    }
 
 
 

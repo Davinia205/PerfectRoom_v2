@@ -64,20 +64,46 @@
     <body>   
 <h1>PerfectRoom</h1>
 
-        <form method="POST">
-        <input type="hidden" name="action" value="login">
-            <input type="text" name="username" id= "username" placeholder="Usuario" required>
-            <input type="password" name="password" id="password" placeholder="Contraseña" required>
+        <form id="login" method="post" onsubmit="return validateLogin()">
+            <input type="text" name="id_hotel" id= "id_hotel" placeholder="id_hotel">
+            <input type="text" name="username" id= "username" placeholder="Usuario">
+            <input type="password" name="password" id="password" placeholder="Contraseña">
             <button type="submit" class="btn btn-info" role="button">Iniciar sesión</button>
             <?php    
     // Verificar si existe $_SESSION['error'] y mostrarlo al final del HTML
-    if (isset($_GET['mensaje'])) {
-        $mensaje = urldecode($_GET['mensaje']);
-        echo "Hola, $mensaje";
-    }
-    ?> 
+    // if (isset($_GET['mensaje'])) {
+    //     $mensaje = urldecode($_GET['mensaje']);
+    //     echo "Hola, $mensaje";
+    // }
+    // ?> 
+    
         </form>
+        <div id="errorMessage" style="color: red; display: none;"></div>
     </div>
+
+    <script>
+function validateLogin() {
+    var username = document.getElementById('username').value;
+    var password = document.getElementById('password').value;
+    var id_hotel = document.getElementById('id_hotel').value;
+
+    // Validación básica del lado del cliente
+    if (username.trim() === '' || password.trim() === '') || id_hotel.trim() === '')  {
+        document.getElementById('errorMessage').textContent = 'Por favor, introduce un nombre de usuario, contraseña e identificador de su establecimiento.';
+        document.getElementById('errorMessage').style.display = 'block';
+        return false;
+    }
+
+    return true; // Envía el formulario si la validación del cliente pasa
+}
+</script>
+
+
+
+
+
+
+
 </body>
 
 </html>
