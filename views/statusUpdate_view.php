@@ -11,7 +11,7 @@
 
 <style> 
    body {
-    font-family: Arial, sans-serif;
+    font-family: Verdana;
    
 }
 img {
@@ -36,7 +36,7 @@ img {
         
     <form id="login" method="post">
     <div class="form-group">
-        <p>Número de habitación <input type="text" class="form-control" name="id_habitacion" id="id_habitacion" required></p><br>
+        <ul>Número de habitación: <input type="text" class="form-control" name="id_habitacion" id="id_habitacion" required></ul><br>
         <label for="Ocupada">Ocupada</label>
         <select name="ocupada" class="form-control" id="ocupada" required>
             <option value="sí">Sí</option>

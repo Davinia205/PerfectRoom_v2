@@ -10,34 +10,15 @@
     
    <style> 
  body {
-    font-family: Arial, sans-serif;
+    font-family: Verdana;
     margin: 0;
     padding: 0;
+    background-color: #59d8ff;
 }
-.list-container h2, h1 {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.list-container {
-    max-width: 600px; /* Ancho máximo para la lista */
-    margin: 0 auto; /* Centrar la lista en la página */
-    padding: 20px;
+.status.container {
+    font-family: Verdana;
 }
 
-.list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-wrap: wrap; /* Permite que los elementos de la lista se envuelvan en múltiples líneas */
-}
-
-.list li {
-    flex: 0 0 50%; /* Cada elemento ocupa el 50% del ancho en pantallas grandes */
-    padding: 10px;
-    box-sizing: border-box;
-}
 
 /* Media query para ajustar el diseño en pantallas más pequeñas */
 @media (max-width: 600px) {
@@ -48,7 +29,45 @@
 
 
 </style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
 <body>
 
+<h5><b>Consulta Estado Habitación</b></h5>
+<div class="form-group">
+    <form id="buscarRegistroForm">
+        <b><label for="registroId">Código de Hotel:</label>
+        <input type="text" class="form-control" id="id_hotel" name="id_hotel">
+        <label for="registroId">Número de habitación:</label>
+        <input type="text" class="form-control"id="id_habitacion" name="id_habitacion">
+        <button type="submit"class="btn btn-primary">Buscar</button>
+</form>
+</div>
+    <div id="resultadoRegistro">
+        <!-- Aquí se mostrará el resultado recuperado de la base de datos -->
+    </div>
 
-</body>
+    <script>
+        $(document).ready(function() {
+            $('#buscarRegistroForm').submit(function(event) {
+                event.preventDefault(); // Evitar el envío del formulario por defecto
+                
+                var id_hotel = $('#id_hotel').val();
+                var id_habitacion = $('#id_habitacion').val();
+
+                $.ajax({
+                    url: 'status_habitacion.php',
+                    type: 'GET',
+                    data: { id_hotel: id_hotel,
+                        id_habitacion: id_habitacion
+                     },
+                    success: function(response) {
+                        $('#resultadoRegistro').html(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>

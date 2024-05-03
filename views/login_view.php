@@ -10,7 +10,7 @@
 
    <style> 
    body {
-    font-family: Arial, sans-serif;
+    font-family: Verdana;
     background-color: #f4f4f4;
     margin: 0;
     padding: 0;
@@ -69,13 +69,7 @@
             <input type="text" name="username" id= "username" placeholder="Usuario">
             <input type="password" name="password" id="password" placeholder="Contraseña">
             <button type="submit" class="btn btn-info" role="button">Iniciar sesión</button>
-            <?php    
-    // Verificar si existe $_SESSION['error'] y mostrarlo al final del HTML
-    // if (isset($_GET['mensaje'])) {
-    //     $mensaje = urldecode($_GET['mensaje']);
-    //     echo "Hola, $mensaje";
-    // }
-    // ?> 
+
     
         </form>
         <div id="errorMessage" style="color: red; display: none;"></div>

@@ -1,5 +1,6 @@
+
+
 <?php
-#   ESTA PAGINA NO ESTA TERMINADA
 require '../vendor/autoload.php';
 use Clases\Usuario;
 use Clases\Status;
@@ -11,63 +12,70 @@ $id_hotel = $_SESSION['id_hotel'];
 $usu = new Usuario();
 if ($usu->TipoUsuario($username)) {
     echo "Acceso Denegado";
+    header('Location: login.php');
+
 } else {
+echo "<body>
+<p><center>Bienvenido/a ".$_SESSION['username']."</center></p>
+<p><center>del hotel ".$_SESSION['id_hotel']."</center></p>";
 
-echo "<p><center>Bienvenido/a ".$_SESSION['username']."</center></p>";
-
-include ("../views/status_view.php");
+include("../views/status_view.php");
 
 $status_1 = new Status();
 $cantidadHabitaciones = $status_1-> totalHabitaciones($id_hotel);
-
-}
-
+$cantidadHabitacionesok= $status_1->habitacionesok($id_hotel);
+$cantidadHabitacionesNoOk= $status_1->habitacionesok($id_hotel);
+$cantidadHabitacionesSalidaOk = $status_1->habitacionesSalidaOk($id_hotel);
+$cantidadHabitacionesSalidaNoOk = $status_1->habitacionesSalidaNoOk($id_hotel);
+$cantidadHabitacionesOcupadaNoOk = $status_1->habitacionesOcupadaNoOk($id_hotel);
+$cantidadHabitacionesOcupadaOk = $status_1->habitacionesOcupadaOk($id_hotel);
+echo "<br></br>";
+echo "<h5><b>Informe de Situación:</b></h5>";
 if ($cantidadHabitaciones !== false){
     // Mostrar los resultados en una tabla HTML
-    echo "<table class='' id='table' align='center'>";
+    echo "<div class='status-container'>";
+
+    echo "<table class='table' id='table' align='center'>";
     echo "<thead>";
     echo "<tr class='text-left'>";
     echo "<th scope='col'>Total Habitaciones: " . $cantidadHabitaciones . "</th>";
-    echo "<tr scope='col'>Total Habitaciones: " . $cantidadHabitaciones . "</tr>";
+}
+    if ($cantidadHabitacionesok !== false){
+        echo "<tr>";
+    echo "<th scope='col'> Total Habitaciones revisadas: " . $cantidadHabitacionesok . "</th>";
     echo "</tr>";
-    echo "</thead>";
-    echo "<tbody>";
+    }
+    if ($cantidadHabitacionesNoOk !== false){
+        echo "<tr>";
+    echo "<th scope='col'>Total Habitaciones sin revisar: " . $cantidadHabitacionesNoOk . "</th>";
+    echo "</tr>";
+    }
+    if ($cantidadHabitacionesSalidaNoOk !== false){
+        echo "<tr>";
+        echo "<th scope='col'>Total Habitaciones salida sin revisar: " . $cantidadHabitacionesSalidaNoOk . "</th>";
+        echo "</tr>";
+    }
+    if ($cantidadHabitacionesSalidaOk !== false){
+        echo "<tr>";
+        echo "<th scope='col'>Total Habitaciones salida revisadas: " . $cantidadHabitacionesSalidaOk . "</th>";
+        echo "</tr>";
+    }
+    if ($cantidadHabitacionesOcupadaNoOk !== false){
+        echo "<tr>";
+        echo "<th scope='col'>Total Habitaciones ocupadas sin revisar: " . $cantidadHabitacionesOcupadaNoOk . "</th>";
+        echo "</tr>";
+    }
+    if ($cantidadHabitacionesOcupadaOk !== false){
+        echo "<tr>";
+        echo "<th scope='col'>Total Habitaciones ocupadas revisadas: " . $cantidadHabitacionesOcupadaOk . "</th>";
+        echo "</tr>";
+    }    
+   
     
-    // Iterar sobre las habitaciones y mostrar cada una en la tabla
 
-        // echo "<tr>";
-        // echo "<p>Total de habitaciones: " . $cantidadHabitaciones . "</p>";
-        // echo "</tr>";
-    
-    
-    echo "</tbody>";
-    echo "</table>";
-}else {
+else {
     echo "No se encontraron datos de habitaciones para el hotel.";
 }
-?>
 
-<!-- <html>
+}
 
-<body>
-    <table class='table table-dark' id='table' align='center'>
-        <thead>
-            <tr>
-            <tr class='text-left'>
-                <th scope='col'>Total Habitaciones</th>
-              
-            </tr>
-            <?php
-            #bucle foreach para recuperar los jugadores de la base de datos
-            foreach ($cantidadHabitaciones as $item) {
-                echo '<tr>';
-                echo '<td>' . $item->totalHabitaciones . '</td>';
-            }
-            echo '</tr>';
-            ?>
-        </thead>
-    </table>
-</body>
-
-</html>
- -->
