@@ -1,7 +1,7 @@
 <?php
 require '../vendor/autoload.php';
 use Clases\Inspeccion_ocupada;
-
+use Clases\Usuario;
 
 
 session_start();
@@ -64,8 +64,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     // print($minibar);
     // print($amenities);
     // print($olor);
-
-    if ($inspeccion_ocupada->isValido($usuario)) { #si el usuario que va a realizar la inspección existe en la base de datos se realiza el chequeo
+    
+    $usu = new Usuario();
+    if ($usu->existeUsuario($usuario)) { #si el usuario que va a realizar la inspección existe en la base de datos se realiza el chequeo
         
     
     $inspeccion_ocupada-> insertar_inspeccion_ocupada();

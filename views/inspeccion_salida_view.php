@@ -33,7 +33,7 @@ img {
     <b><p>Rellene los datos de la Inspección:</p></b>
     <form id="login" method="post" onsubmit="return validateUser()">
     <div class="form-group">
-        <p>Realizada por <input type="text" class="form-control" name="usuario" id="usuario" required></p><br>
+        <p>Realizada por(introduzca usuario) <input type="text" class="form-control" name="usuario" id="usuario" required></p><br>
         <p>Número de habitación <input type="text" class="form-control" name="id_habitacion" id="id_habitacion" required></p><br>
         <p>Planta<input type="number"  class="form-control" name="planta" id="planta"></p>
         <p>Check List </p>

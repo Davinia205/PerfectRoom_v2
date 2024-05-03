@@ -378,29 +378,29 @@ public function insertar_inspeccion_salida() {
 
             ]);
         
-        echo "Datos insertados correctamente en la tabla checklist_salida";
+        echo "Datos insertados correctamente";
     } catch (PDOException $e) {
         die("Error al insertar datos: " . $e->getMessage());
     }
 }
 
   # se va a eliminar, ya existe en la clase usuario
-public function isValido($u)
-{
-    $pass1 = hash('sha256', $u);
-    $consulta = "select * from usuarios where usuario=:u";
-    $stmt = $this->conexion->prepare($consulta);
-    try {
-        $stmt->execute([
-            ':u' => $u,
+// public function isValido($u)
+// {
+//     $pass1 = hash('sha256', $u);
+//     $consulta = "select * from usuarios where usuario=:u";
+//     $stmt = $this->conexion->prepare($consulta);
+//     try {
+//         $stmt->execute([
+//             ':u' => $u,
         
-        ]);
-    } catch (PDOException $ex) {
-        die("Error al consultar usuario: " . $ex->getMessage());
-    }
-    if ($stmt->rowCount() == 0) return false;
-    return true;
-}
+//         ]);
+//     } catch (PDOException $ex) {
+//         die("Error al consultar usuario: " . $ex->getMessage());
+//     }
+//     if ($stmt->rowCount() == 0) return false;
+//     return true;
+// }
 #método que permite actualizar el estado de la habitación una vez realizada la inspección
 public function updateHabitaciones($id_habitacion){
 
@@ -414,7 +414,7 @@ public function updateHabitaciones($id_habitacion){
 
                 ':id_habitacion' => $this->id_habitacion]);
 
-                echo "Actualización realizada correctamente";
+                echo ". Actualización realizada correctamente";
     }
     catch (PDOException $ex) {
         die("Error al actualizar estado: " . $ex->getMessage());

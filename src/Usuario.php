@@ -28,7 +28,7 @@ class Usuario extends Conexion
     {
         parent::__construct();
     }
-
+   
     public function gettipo(){
         return $this->tipo;
     }
@@ -175,19 +175,24 @@ class Usuario extends Conexion
         }
     }
 
+
+
+
     function existeUsuario($usuario)
-        {
-            $consulta = "select * from usuarios where usuario=:u";
-            $stmt = $this->conexion->prepare($consulta);
-            try {
-                $stmt->execute([
-                    ':u' => $usuario    ]);
-            } catch (PDOException $ex) {
-                die("El usuario ya existe: " . $ex->getMessage());
-            }
-            if ($stmt->rowCount() > 0) return false;
-            return true;
+    {
+        $consulta = "select * from usuarios where usuario=:u";
+        $stmt = $this->conexion->prepare($consulta);
+        try {
+            $stmt->execute([
+                ':u' => $usuario
+                
+            ]);
+        } catch (PDOException $ex) {
+            die("Error al consultar usuario: " . $ex->getMessage());
         }
+        if ($stmt->rowCount() == 0) return false;
+        return true;
+    }
                
         function existeHotel($id_hotel)
         {

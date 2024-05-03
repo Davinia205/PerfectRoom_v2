@@ -1,9 +1,9 @@
 <?php
-#use Clases\Usuario;
 
 require '../vendor/autoload.php';
 
-#use Clases\Conexion;
+use Clases\Usuario;
+
 use Clases\Inspeccion_salida;
 
 
@@ -75,7 +75,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $inspeccion_salida->setTelefono($telefono);
     $inspeccion_salida->setFecha($fecha);
   
-    if ($inspeccion_salida->isValido($usuario)) {
+    $usu = new Usuario();
+
+    if ($usu->existeUsuario($usuario)) {
         
     
 
