@@ -10,9 +10,9 @@ CREATE TABLE `hotel` (
 CREATE TABLE `habitaciones` (
   `id_habitacion` int NOT NULL,
   `planta` int NOT NULL,
-  `ocupada` tinyint DEFAULT NULL,
+  `ocupada` varchar(2) DEFAULT NULL,
   `estado` varchar(45) DEFAULT NULL,
-  `salida` tinyint DEFAULT NULL,
+  `salida` varchar(2) DEFAULT NULL,
   `id_hotel` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_habitacion`),
   KEY `planta` (`planta`),
@@ -32,7 +32,6 @@ CREATE TABLE `usuarios` (
   UNIQUE KEY `usuario` (`usuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-
 CREATE TABLE `checklist_ocupada` (
   `idchecklist` int NOT NULL AUTO_INCREMENT,
   `id_habitacion` varchar(10) NOT NULL,
@@ -47,10 +46,11 @@ CREATE TABLE `checklist_ocupada` (
   `olor` varchar(20) NOT NULL,
   `usuario` varchar(20) NOT NULL,
   `servicio` varchar(20) NOT NULL,
+  `fecha` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`idchecklist`),
   KEY `usuario` (`usuario`),
   CONSTRAINT `checklist_ocupada_ibfk_1` FOREIGN KEY (`usuario`) REFERENCES `usuarios` (`usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=515 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=518 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
 CREATE TABLE `checklist_salida` (
   `idchecklist_salida` int NOT NULL AUTO_INCREMENT,
@@ -74,19 +74,20 @@ CREATE TABLE `checklist_salida` (
   `usuario` varchar(50) DEFAULT NULL,
   `minibar` varchar(2) DEFAULT NULL,
   `servicio` varchar(2) DEFAULT NULL,
+  `fecha` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`idchecklist_salida`),
   KEY `usuario` (`usuario`),
   KEY `id_habitacion` (`id_habitacion`),
   CONSTRAINT `checklist_salida_ibfk_1` FOREIGN KEY (`usuario`) REFERENCES `usuarios` (`usuario`),
   CONSTRAINT `checklist_salida_ibfk_2` FOREIGN KEY (`id_habitacion`) REFERENCES `habitaciones` (`id_habitacion`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
 
 INSERT INTO `perfectroom`.`hotel` (`cant_habitaciones`, `id_hotel`, `nombre`) VALUES ('30', '1D', 'Palace');
 INSERT INTO `perfectroom`.`usuarios` (`usuario`, `password`, `cargo`, `tipo`, `nombre`, `apellidos`, `id_empleado`, `id_hotel`) VALUES ('sdrf000', 'clave4rf', 'gobernanta', 'Administrador', 'Cristina', 'Riquelme', '2', '1D');
-INSERT INTO `perfectroom`.`habitaciones` (`id_habitacion`, `planta`, `ocupada`, `estado`, `id_hotel`) VALUES ('1', '1', '0', 'ok', '1C');
-INSERT INTO `perfectroom`.`habitaciones` (`id_habitacion`, `planta`, `ocupada`, `salida`, `id_hotel`) VALUES ('2', '1', '1', '0', '1C');
-INSERT INTO `perfectroom`.`habitaciones` (`id_habitacion`, `planta`, `ocupada`, `salida`, `id_hotel`) VALUES ('3', '1', '0', '1', '1C');
+INSERT INTO `perfectroom`.`habitaciones` (`id_habitacion`, `planta`, `ocupada`, `estado`, 'salida', `id_hotel`) VALUES ('1', '1', 'sí', 'ok','no', '1C');
+INSERT INTO `perfectroom`.`habitaciones` (`id_habitacion`, `planta`, `ocupada`,`salida`, `id_hotel`) VALUES ('2', '1', 'no', 'sí', '1C');
+INSERT INTO `perfectroom`.`habitaciones` (`id_habitacion`, `planta`, `ocupada`, 'estado',`salida`, `id_hotel`) VALUES ('3', '1', 'no','ok', 'sí', '1C');
 
 
 

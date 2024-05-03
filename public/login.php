@@ -1,20 +1,20 @@
 <?php
 require '../vendor/autoload.php';
 
-include ("../views/login_view.php");
+include ("../views/login_view.php"); #incluimos la vista que contiene el formulario para hacer el login
 
 use Clases\Usuario;
 use Clases\Conexion;
 
 
 
-session_start();
+session_start(); #iniciamos sesión
 
 
 $conn = new Conexion();
-$conn->crearConexion();
+$conn->crearConexion(); #establecemos conexión con la base de datos
 
-$us = new Usuario();
+$us = new Usuario(); #instanciamos objeto de la clase usuario para realizar el login con los datos que recibimos del formulario 
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST")
@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 if ($us->isValido($username, $password, $id_hotel)) {
     $_SESSION['username'] = $username;
     $_SESSION['id_hotel'] = $id_hotel;
-    header('Location: dashboard.php');
+    header('Location: dashboard.php'); #Si todo va bien accedemos al dashboard
     die();
 } else {
         // Credenciales incorrectas, mostrar mensaje de error en el formulario

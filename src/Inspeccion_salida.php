@@ -30,6 +30,10 @@ public $amenities;
 public $olor;
 public $usuario;
 
+public $situacion;
+
+public $fecha;
+
 public function __construct()
 {
     parent::__construct();
@@ -297,15 +301,49 @@ return $this;
 }
 
 
+public function getSituacion()
+{
+return $this->situacion;
+}
 
+/**
+ * Set the value of situacionSalida
+ *
+ * @return  self
+ */ 
+public function setSituacion($situacion)
+{
+$this->situacion = $situacion;
 
+return $this;
+}
 
+/**
+ * Get the value of fecha
+ */ 
+public function getFecha()
+{
+return $this->fecha;
+}
+
+/**
+ * Set the value of fecha
+ *
+ * @return  self
+ */ 
+public function setFecha($fecha)
+{
+$this->fecha = $fecha;
+
+return $this;
+}
+#insertamos en la base de datos los valores para la tabla checklist_salida
 public function insertar_inspeccion_salida() {
     try {
         $sql = "INSERT INTO checklist_salida (id_habitacion, puertas, interruptores, mobiliario, griferia, cortinas, paredes, objetos, telefono, television,
-        papeleras, camas, polvo, suelo, toallas, minibar, amenities, olor, usuario, servicio )        
+        papeleras, camas, polvo, suelo, toallas, minibar, amenities, olor, usuario, servicio, fecha )        
         VALUES (:id_habitacion, :puertas,  :interruptores, :mobiliario, :griferia, :cortinas, :paredes, :objetos, :telefono, :television,
-                :papeleras, :camas, :polvo, :suelo, :toallas, :minibar, :amenities, :olor, :usuario, :servicio
+                :papeleras, :camas, :polvo, :suelo, :toallas, :minibar, :amenities, :olor, :usuario, :servicio, :fecha
                  )";
         
         $stmt = $this->conexion->prepare($sql);
@@ -332,7 +370,10 @@ public function insertar_inspeccion_salida() {
                 ':amenities' => $this->amenities,
                 ':olor' =>$this->olor,
                 ':usuario' => $this->usuario,
-                ':servicio'=>$this->servicio
+                ':servicio'=>$this->servicio,             
+                ':fecha'=>$this->fecha
+
+
                 
 
             ]);
@@ -343,7 +384,7 @@ public function insertar_inspeccion_salida() {
     }
 }
 
-
+  # se va a eliminar, ya existe en la clase usuario
 public function isValido($u)
 {
     $pass1 = hash('sha256', $u);
@@ -360,7 +401,7 @@ public function isValido($u)
     if ($stmt->rowCount() == 0) return false;
     return true;
 }
-
+#método que permite actualizar el estado de la habitación una vez realizada la inspección
 public function updateHabitaciones($id_habitacion){
 
     try {
@@ -372,12 +413,39 @@ public function updateHabitaciones($id_habitacion){
 
 
                 ':id_habitacion' => $this->id_habitacion]);
+
+                echo "Actualización realizada correctamente";
     }
     catch (PDOException $ex) {
         die("Error al actualizar estado: " . $ex->getMessage());
 }
 
 }
+#método que permite actualizar el estado salida de la habitación una vez realizada la inspección
+public function updateSalida($id_habitacion, $situacion){
+
+    try {
+        // Prepare the SQL query with placeholders
+        $sql = "UPDATE habitaciones SET salida = :situacion WHERE id_habitacion = :id_habitacion";
+        
+        // Prepare the SQL statement
+        $stmt = $this->conexion->prepare($sql);
+        
+        // Bind parameters and execute the statement
+        $stmt->execute([
+            ':id_habitacion' => $id_habitacion, // Use the passed $id_habitacion parameter
+            ':situacion' => $situacion // Use the passed $situacion parameter
+        ]);
+        echo "Actualización estado Salida realizada correctamente";
+
+    } catch (PDOException $ex) {
+        // Handle any errors that occur during the database operation
+        die("Error al actualizar estado: " . $ex->getMessage());
+    }
+}
+
+
+
 
 }
 

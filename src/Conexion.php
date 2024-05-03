@@ -1,5 +1,5 @@
 <?php
-
+#clase que permite establecer conexión con la base de datos
 namespace Clases;
 
 use PDO;

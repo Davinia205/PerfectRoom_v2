@@ -1,5 +1,5 @@
 <?php
-
+#Esta clase sirve para obtener los datos reflejados en status.php
 namespace Clases;
 require '../vendor/autoload.php';
 

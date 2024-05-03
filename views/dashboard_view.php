@@ -10,7 +10,6 @@
     <style> 
    body {
     font-family: Arial, sans-serif;
-    background-color:  #87CEEB;
 
    
 }
@@ -32,16 +31,22 @@ img {
     <div class="dashboard-container">
     <b><p>Seleccione una opción:</p></b>
     <br></br>
-    <a href="../public/inspeccion_ocupada.php" class="fcc-btn" >+ Nueva Inspeccion habitación ocupada </a>
+    <a href="../public/inspeccion_ocupada.php" class="fcc-btn" > Nueva Inspeccion habitación ocupada </a>
     <br></br>
     <br></br>
-    <a href="../public/inspeccion_salida.php" class="fcc-btn"> + Nueva Inspeccion habitación salida</a>
+    <a href="../public/inspeccion_salida.php" class="fcc-btn">  Nueva Inspeccion habitación salida</a>
     <br></br>
     <br></br>
-    <a href="../public/status.php"class=class="fcc-btn" >+ Estado Habitaciones</a>
+    <a href="../public/status.php"class=class="fcc-btn" > Estado Habitaciones</a>
     <br></br>
     <br></br>
-    <a href="../public/crearUsuario.php"class="fcc-btn"> + Crear Usuario</a>
+    <a href="../public/statusUpdate.php"class=class="fcc-btn" > Actualizar Estado Habitaciones</a>
+    <br></br>
+    <br></br>
+    <a href="../public/crearUsuario.php"class="fcc-btn"> Crear Usuario</a>
+    <br></br>
+    <br></br>
+    <a href="../public/index.html"class="fcc-btn">  Salir</a>
     <br></br>
     <center><img src="../views/images/clic.png"></center>
 

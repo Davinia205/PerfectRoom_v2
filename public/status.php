@@ -1,5 +1,5 @@
 <?php
-
+#   ESTA PAGINA NO ESTA TERMINADA
 require '../vendor/autoload.php';
 use Clases\Usuario;
 use Clases\Status;
@@ -12,8 +12,11 @@ $usu = new Usuario();
 if ($usu->TipoUsuario($username)) {
     echo "Acceso Denegado";
 } else {
-echo "<p>Bienvenido/a</p>".$_SESSION['username'];
-#include ("../views/status_view.php");
+
+echo "<p><center>Bienvenido/a ".$_SESSION['username']."</center></p>";
+
+include ("../views/status_view.php");
+
 $status_1 = new Status();
 $cantidadHabitaciones = $status_1-> totalHabitaciones($id_hotel);
 
@@ -21,19 +24,20 @@ $cantidadHabitaciones = $status_1-> totalHabitaciones($id_hotel);
 
 if ($cantidadHabitaciones !== false){
     // Mostrar los resultados en una tabla HTML
-    echo "<table class='table table-dark' id='table' align='center'>";
+    echo "<table class='' id='table' align='center'>";
     echo "<thead>";
     echo "<tr class='text-left'>";
-    echo "<th scope='col'>Total Habitaciones</th>";
+    echo "<th scope='col'>Total Habitaciones: " . $cantidadHabitaciones . "</th>";
+    echo "<tr scope='col'>Total Habitaciones: " . $cantidadHabitaciones . "</tr>";
     echo "</tr>";
     echo "</thead>";
     echo "<tbody>";
     
     // Iterar sobre las habitaciones y mostrar cada una en la tabla
 
-        echo "<tr>";
-        echo "<p>Total de habitaciones: " . $cantidadHabitaciones . "</p>";
-        echo "</tr>";
+        // echo "<tr>";
+        // echo "<p>Total de habitaciones: " . $cantidadHabitaciones . "</p>";
+        // echo "</tr>";
     
     
     echo "</tbody>";

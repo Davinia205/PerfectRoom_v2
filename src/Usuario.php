@@ -1,5 +1,5 @@
 <?php
-
+#clase para realizar operaciones relacionadas con usuarios
 namespace Clases;
 require '../vendor/autoload.php';
 use PDOException;

@@ -6,7 +6,7 @@ use Clases\Usuario;
 session_start();
 
 echo "<p><center>Bienvenido/a ".$_SESSION['username']."</center></p>";
-include ("../views/crear_usuario_view.php");
+include ("../views/crear_usuario_view.php"); #incluimos la vista para que el usuario tpipo administrador pueda crear nuevos usuarios
 
 
 if (!isset($_SESSION['username'])) {
@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $usu->setcargo($cargo);
     $usu->setId_hotel($id_hotel);
 
-
+     #condiciones para poder crear un usuario nuevo
     if ($usu->existeUsuario($username) && $usu-> existeHotel($id_empleado) && $usu-> existeIdEmpleado($id_empleado))
     #var_dump($resultado);
      {

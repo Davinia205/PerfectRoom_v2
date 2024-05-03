@@ -12,7 +12,7 @@ session_start();
 
 echo "<p><center>Bienvenido/a ".$_SESSION['username']."</center></p>";
 
-include ("../views/inspeccion_salida_view.php");
+include ("../views/inspeccion_salida_view.php"); #incluimos la vista que contiene el formulario para que el usuario realice un chequeo de salida.
 
 
 if (!isset($_SESSION['username'])) {
@@ -45,7 +45,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $usuario = trim($_POST['usuario']);
     $telefono = trim($_POST['telefono']);
     $television = trim($_POST['television']);
-  
+    $fecha = date('d/m/Y');
+
     #utilizado para pruebas
     // print($olor);
     // print($cortinas);
@@ -72,16 +73,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $inspeccion_salida->setusuario($usuario);
     $inspeccion_salida->setTelevision($television);
     $inspeccion_salida->setTelefono($telefono);
+    $inspeccion_salida->setFecha($fecha);
   
     if ($inspeccion_salida->isValido($usuario)) {
         
     
 
-        $inspeccion_salida-> insertar_inspeccion_salida();
-        $inspeccion_salida-> updateHabitaciones($id_habitacion);
+        $inspeccion_salida-> insertar_inspeccion_salida(); #insertamos inspección de salida si el usuario existe en la base de datos
+        $inspeccion_salida-> updateHabitaciones($id_habitacion); #actualizamos estado de la habitación
          
         } else {
-                // Credenciales incorrectas, mostrar mensaje de error en el formulario
+            #mostramos mensaje de error
         
             echo '<script>
                         document.getElementById("errorMessage").textContent = "Usuario no existe. Por favor, intenta de nuevo.";
