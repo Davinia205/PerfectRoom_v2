@@ -10,12 +10,12 @@ use Clases\Inspeccion_salida;
 
 session_start();
 
-echo "<p><center>Bienvenido/a ".$_SESSION['username']."</center></p>";
+echo "<p><center>Bienvenido/a ".$_SESSION['usuario']."</center></p>";
 
 include ("../views/inspeccion_salida_view.php"); #incluimos la vista que contiene el formulario para que el usuario realice un chequeo de salida.
 
 
-if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['usuario'])) {
     // Redirigir a la página de login
     header("Location: login.php");
     exit; // Asegurarse de que el script se detenga después de redirigir
@@ -25,6 +25,8 @@ if (!isset($_SESSION['username'])) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     #recogemos los datos del formulario, trimamos las cadenas
+
+    $id_hotel = trim($_POST['id_hotel']);
     $id_habitacion = trim($_POST['id_habitacion']);
     $puertas= trim($_POST['puertas']);
     $interruptores= trim($_POST['interruptores']);
@@ -53,6 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
     $inspeccion_salida = new Inspeccion_salida();  
 
+    $inspeccion_salida->setId_hotel($id_hotel);
     $inspeccion_salida->setid_habitacion($id_habitacion);
     $inspeccion_salida-> setpuertas($puertas);
     $inspeccion_salida->setinterruptores($interruptores);
@@ -77,12 +80,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
   
     $usu = new Usuario();
 
-    if ($usu->existeUsuario($usuario)) {
+    if ($usu->existeUsuario($usuario, $id_hotel)) {
         
     
 
         $inspeccion_salida-> insertar_inspeccion_salida(); #insertamos inspección de salida si el usuario existe en la base de datos
-        $inspeccion_salida-> updateHabitaciones($id_habitacion); #actualizamos estado de la habitación
+        $inspeccion_salida-> updateHabitaciones($id_habitacion, $id_hotel); #actualizamos estado de la habitación
          
         } else {
             #mostramos mensaje de error

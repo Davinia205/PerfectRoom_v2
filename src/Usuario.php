@@ -10,13 +10,11 @@ use Clases\Conexion;
 
 class Usuario extends Conexion
 {
-    public $username;
+    public $usuario;
     public $password;
     
     public $nombre;
     public $apellidos;
-
-    public $id_empleado;
     
     public $tipo;
 
@@ -35,11 +33,11 @@ class Usuario extends Conexion
     public function settipo($tipo){
         $this->tipo=$tipo;
     }
-    public function getusername(){
-        return $this->username;
+    public function getusuario(){
+        return $this->usuario;
     }
-    public function setusername($username){
-        $this->username=$username;
+    public function setusuario($usuario){
+        $this->usuario=$usuario;
     }
 
     public function getpassword(){
@@ -98,22 +96,7 @@ class Usuario extends Conexion
     /**
      * Get the value of id_empleado
      */ 
-    public function getId_empleado()
-    {
-        return $this->id_empleado;
-    }
 
-    /**
-     * Set the value of id_empleado
-     *
-     * @return  self
-     */ 
-    public function setId_empleado($id_empleado)
-    {
-        $this->id_empleado = $id_empleado;
-
-        return $this;
-    }
 
     public function getId_hotel()
     {
@@ -146,23 +129,22 @@ class Usuario extends Conexion
         } catch (PDOException $ex) {
             die("Error al consultar usuario: " . $ex->getMessage());
         }
-        if ($stmt->rowCount() == 0) return false;
+        if ($stmt->rowCount() ==  0) return false;
         return true;
     }
 
     function crearUsuario(){
-        $insert = "insert into usuarios() values(:u, :p, :c, :t, :n, :a, :i, :ih )";
+        $insert = "insert into usuarios values(:u, :p, :c, :t, :n, :a, :ih )";
         $stmt = $this->conexion->prepare($insert);
     
         try{
             $stmt->execute([
-                ':u' => $this->username,
+                ':u' => $this->usuario,
                 ':p' => $this->password,
                 ':c' => $this->cargo,
                 ':t' => $this->tipo,
                 ':n' => $this -> nombre,
                 ':a' => $this-> apellidos,
-                ':i' => $this-> id_empleado,
                 ':ih' => $this-> id_hotel
                 
                
@@ -178,20 +160,21 @@ class Usuario extends Conexion
 
 
 
-    function existeUsuario($usuario)
+    function existeUsuario($usuario, $id_hotel)
     {
-        $consulta = "select * from usuarios where usuario=:u";
+        $consulta = "select * from usuarios where usuario=:u and id_hotel=:i";
         $stmt = $this->conexion->prepare($consulta);
         try {
             $stmt->execute([
-                ':u' => $usuario
+                ':u' => $usuario,
+                ':i' => $id_hotel
                 
             ]);
         } catch (PDOException $ex) {
             die("Error al consultar usuario: " . $ex->getMessage());
         }
-        if ($stmt->rowCount() == 0) return false;
-        return true;
+        if ($stmt->rowCount() == 0) return true;
+        return false;
     }
                
         function existeHotel($id_hotel)
@@ -204,22 +187,24 @@ class Usuario extends Conexion
             } catch (PDOException $ex) {
                 die("El código de hotel no es correcto: " . $ex->getMessage());
             }
-            if ($stmt->rowCount() == 0) return false;
-            return true;
+            if ($stmt->rowCount() > 0) return true;
+            return false;
         }
-        function existeIdEmpleado($id_empleado)
-        {
-            $consulta = "select * from usuarios where id_empleado= :ie";
-            $stmt = $this->conexion->prepare($consulta);
-            try {
-                $stmt->execute([
-                    ':ie' => $id_empleado   ]);
-            } catch (PDOException $ex) {
-                die("El código de empleado no es correcto: " . $ex->getMessage());
-            }
-            if ($stmt->rowCount() > 0) return false;
-            return true;
-        }
+        // function existeIdEmpleado($id_empleado, $id_hotel)
+        // {
+        //     $consulta = "select * from usuarios where id_empleado= :ie and id_hotel = ih";
+        //     $stmt = $this->conexion->prepare($consulta);
+        //     try {
+        //         $stmt->execute([
+        //             ':ie' => $id_empleado,
+        //             'ih' => $id_hotel
+        //            ]);
+        //     } catch (PDOException $ex) {
+        //         die("El empleado no es correcto: " . $ex->getMessage());
+        //     }
+        //     if ($stmt->rowCount() < 1) return true;
+        //     return false;
+        // }
 
         function TipoUsuario($usuario)
         {
@@ -234,8 +219,38 @@ class Usuario extends Conexion
             if ($stmt = 'Usuario Limpieza') return false;
             return true;
         }
-            }
+        public function updateUsuario($nuevo_nombre,$usuario, $id_hotel)
+        // $nuevo_apellidos, $nuevo_cargo, $nuevo_tipo, $usuario, $id_hotel)
+        {
+            try {
+                $sql = "UPDATE usuarios 
+                        SET nombre = ':nuevo_nombre'
+                            -- apellidos = ':nuevo_apellidos',
+                            -- cargo = ':nuevo_cargo',
+                            -- tipo = ':nuevo_tipo'
+                        WHERE (usuario = :usuario) AND id_hotel = :id_hotel)";
+                    
+                $stmt = $this->conexion->prepare($sql);
+                
+                $stmt->execute([
+                    // ':nuevo_nombre' => $nuevo_nombre,
+                    // ':nuevo_apellidos' => $nuevo_apellidos,
+                    // ':nuevo_cargo' => $nuevo_cargo,
+                    // ':nuevo_tipo' => $nuevo_tipo,
+                    ':nuevo_nombre' => $nuevo_nombre,
+                    ':usuario' => $this -> usuario,
+                    ':id_hotel' => $this-> id_hotel
+
+
+                ]);
         
+                echo "Actualización realizada correctamente";
+            } catch (PDOException $ex) {
+                die("Error al actualizar el usuario " . $ex->getMessage());
+            }
+        }
+}
+            
 
    
 

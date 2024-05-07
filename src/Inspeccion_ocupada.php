@@ -9,7 +9,7 @@ use PDOException;
 
 class Inspeccion_ocupada extends Conexion{
     
-    #private $idchecklist;
+    public $id_hotel;
     public $id_habitacion;
     public $ropa_sucia;
     public $papeleras;
@@ -34,6 +34,25 @@ class Inspeccion_ocupada extends Conexion{
         parent::__construct();
     }
 
+    /**
+     * Get the value of id_hotel
+     */ 
+    public function getId_hotel()
+    {
+        return $this->id_hotel;
+    }
+
+    /**
+     * Set the value of id_hotel
+     *
+     * @return  self
+     */ 
+    public function setId_hotel($id_hotel)
+    {
+        $this->id_hotel = $id_hotel;
+
+        return $this;
+    }
     public function getid_habitacion(){
         return $this->id_habitacion;
     }
@@ -147,14 +166,14 @@ class Inspeccion_ocupada extends Conexion{
     #insertamos en la base de datos los valores para la tabla checklist_ocupada
     public function insertar_inspeccion_ocupada() {
         try {
-            $sql = "INSERT INTO checklist_ocupada (id_habitacion, ropa_sucia, papeleras, camas, polvo, suelo, toallas, minibar, amenities, olor, usuario, servicio, fecha) 
-                    VALUES (:id_habitacion, :ropa_sucia, :papeleras, :camas, :polvo, :suelo, :toallas, :minibar, :amenities, :olor, :usuario, :servicio, :fecha)";
+            $sql = "INSERT INTO checklist_ocupada (id_habitacion, ropa_sucia, papeleras, camas, polvo, suelo, toallas, minibar, amenities, olor, usuario, servicio, fecha, id_hotel) 
+                    VALUES (:id_habitacion, :ropa_sucia, :papeleras, :camas, :polvo, :suelo, :toallas, :minibar, :amenities, :olor, :usuario, :servicio, :fecha, :id_hotel)";
             
             $stmt = $this->conexion->prepare($sql);
             
                 $stmt->execute([
 
-
+                    ':id_hotel' => $this-> id_hotel,
                     ':id_habitacion' => $this->id_habitacion,
                     ':ropa_sucia' => $this ->ropa_sucia,
                     ':papeleras' => $this->papeleras,
@@ -177,35 +196,19 @@ class Inspeccion_ocupada extends Conexion{
             #die("Error al insertar datos: " . $e->getMessage());
         }
     }
-  # se va a eliminar, ya existe en la clase usuario
-    // public function isValido($u)
-    // {
-    //     $pass1 = hash('sha256', $u);
-    //     $consulta = "select * from usuarios where usuario=:u";
-    //     $stmt = $this->conexion->prepare($consulta);
-    //     try {
-    //         $stmt->execute([
-    //             ':u' => $u,
-            
-    //         ]);
-    //     } catch (PDOException $ex) {
-    //         die("Error al consultar usuario: " . $ex->getMessage());
-    //     }
-    //     if ($stmt->rowCount() == 0) return false;
-    //     return true;
-    // }
-    // #método que permite actualizar el estado de la habitación una vez realizada la inspección
-    public function updateHabitaciones($id_habitacion){
+
+    public function updateHabitaciones($id_habitacion, $id_hotel){
 
         try {
-            $sql = "UPDATE habitaciones SET estado = 'ok' WHERE (id_habitacion = :id_habitacion)";
+            $sql = "UPDATE habitaciones SET estado = 'ok' WHERE (id_habitacion = :id_habitacion) AND id_hotel = :id_hotel";
                 
             $stmt = $this->conexion->prepare($sql);
             
                 $stmt->execute([
 
 
-                    ':id_habitacion' => $this->id_habitacion]);
+                    ':id_habitacion' => $this->id_habitacion,
+                    ':id_hotel' => $this -> id_hotel]);
                     echo "Actualización realizada correctamente";
         }
         catch (PDOException $ex) {
@@ -237,6 +240,8 @@ public function updateOcupada($id_habitacion, $situacion){
 }
 
    
+
+    
 }
     
 

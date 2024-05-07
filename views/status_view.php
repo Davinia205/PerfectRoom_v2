@@ -4,25 +4,36 @@
 <head>
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!--bootstrap 4 -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--bootstrap 5 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     
    <style> 
  body {
     font-family: Verdana;
     margin: 0;
     padding: 0;
-    background-color: #59d8ff;
+
 }
 .status.container {
     font-family: Verdana;
 }
 
 
+.btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #0DCAF0;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+} 
+
+
 /* Media query para ajustar el diseño en pantallas más pequeñas */
 @media (max-width: 600px) {
-    .list li {
+    body {
         flex: 0 0 100%; /* Cada elemento ocupa el 100% del ancho en pantallas pequeñas */
     }
 }
@@ -32,15 +43,17 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    </a>
 <h5><b>Consulta Estado Habitación</b></h5>
+
 <div class="form-group">
     <form id="buscarRegistroForm">
-        <b><label for="registroId">Código de Hotel:</label>
+        <label for="registroId">Código de Hotel:</label>
         <input type="text" class="form-control" id="id_hotel" name="id_hotel">
         <label for="registroId">Número de habitación:</label>
         <input type="text" class="form-control"id="id_habitacion" name="id_habitacion">
-        <button type="submit"class="btn btn-primary">Buscar</button>
+        <button type="submit"class="btn">Buscar</button>
 </form>
 </div>
     <div id="resultadoRegistro">
@@ -71,3 +84,5 @@
             });
         });
     </script>
+
+    

@@ -153,7 +153,6 @@ public function statusHabitacion($id_hotel, $id_habitacion)
     $consulta = "SELECT estado FROM habitaciones WHERE id_hotel = :id_hotel AND id_habitacion = :id_habitacion";
     $stmt = $this->conexion->prepare($consulta);
     
-    $consulta = "SELECT estado FROM habitaciones WHERE id_hotel = :id_hotel AND id_habitacion = :id_habitacion";
     
     try {
         $stmt = $this->conexion->prepare($consulta);

@@ -6,11 +6,11 @@ use Clases\Inspeccion_salida;
 
 session_start();
 echo "<br></br>";
-echo "<p><center>Bienvenido/a ".$_SESSION['username']."</center></p>";
+echo "<p><center>Bienvenido/a ".$_SESSION['usuario']."</center></p>";
 
 
 include ("../views/statusUpdate_view.php"); #incluimos la vista que permite actualizar al usuario el estado de las habitaciones para que se reflejen en el report de situación (status.php)
-if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['usuario'])) {
     // Redirigir a la página de login
     header("Location: login.php");
     exit; // Asegurarse de que el script se detenga después de redirigir

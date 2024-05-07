@@ -19,13 +19,13 @@ $us = new Usuario(); #instanciamos objeto de la clase usuario para realizar el l
 
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
-    $username = trim($_POST['username']);
+    $usuario = trim($_POST['usuario']);
     $password = trim($_POST['password']);
     $id_hotel = trim($_POST['id_hotel']);
 
 
-if ($us->isValido($username, $password, $id_hotel)) {
-    $_SESSION['username'] = $username;
+if ($us->isValido($usuario, $password, $id_hotel)) {
+    $_SESSION['usuario'] = $usuario;
     $_SESSION['id_hotel'] = $id_hotel;
     header('Location: dashboard.php'); #Si todo va bien accedemos al dashboard
     die();

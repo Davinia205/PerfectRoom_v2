@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
    
 <!--bootstrap mobile first-->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
 <style> 
    body {
@@ -34,9 +33,9 @@ img {
     <b><p>Actualización de estado de habitaciones:</p></b>
     <!-- <form action="../public/inspeccion_ocupada.php" method="post"> -->
         
-    <form id="login" method="post">
+    <form id="status" method="post">
     <div class="form-group">
-        <ul>Número de habitación: <input type="text" class="form-control" name="id_habitacion" id="id_habitacion" required></ul><br>
+        <label for="Numero">Número de habitación: </label><input type="text" class="form-control" name="id_habitacion" id="id_habitacion" required></ul><br>
         <label for="Ocupada">Ocupada</label>
         <select name="ocupada" class="form-control" id="ocupada" required>
             <option value="sí">Sí</option>

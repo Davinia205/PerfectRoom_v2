@@ -17,6 +17,25 @@ img {
            max-width:100%;
 }
 
+.enviar a  {
+
+border: none;
+border-radius: 4px;
+background-color: #0DCAF0;
+color: #fff;
+font-size: 16px;
+cursor: pointer;
+}
+
+.btn {
+border: none;
+border-radius: 4px;
+background-color: #0DCAF0;
+color: #fff;
+font-size: 16px;
+cursor: pointer;
+}
+
 
 @media (max-width: 600px) {
     .inspeccion-container {
@@ -27,6 +46,8 @@ img {
 </style>
 
 <body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 <div class="inspeccion-container">
 <img src="../views/images/room.jpg">
 <br></br>
@@ -34,6 +55,7 @@ img {
     <form id="login" method="post" onsubmit="return validateUser()">
     <div class="form-group">
         <p>Realizada por(introduzca usuario) <input type="text" class="form-control" name="usuario" id="usuario" required></p><br>
+        <p>Código de Hotel <input type="text" class="form-control" name="id_hotel" id="id_hotel" required></p><br>
         <p>Número de habitación <input type="text" class="form-control" name="id_habitacion" id="id_habitacion" required></p><br>
         <p>Planta<input type="number"  class="form-control" name="planta" id="planta"></p>
         <p>Check List </p>
@@ -160,8 +182,10 @@ img {
             <option value="No">No</option>
         </select>
         <br></br>
-        <center><input type="submit" class="btn btn-info" role="button" name="enviar">  <a href="../views/dashboard_view.php" class="btn btn-info" role="button"> Volver  </a>   <a href="../view/login_view.php" class="btn btn-info" role="button"> Salir   </a> 
+        <div class="enviar">
+        <center><input type="submit" class="btn" role="button" name="enviar">  <a href="../views/dashboard_view.php" class="btn btn-info" role="button"> Volver  </a>   <a href="../view/login_view.php" class="btn btn-info" role="button"> Salir   </a> 
     </a></center>
+        </div>
     </div>
     </form>
     <div id="errorMessage" style="color: red; display: none;"></div>

@@ -3,9 +3,11 @@
 require '../vendor/autoload.php';
 use Clases\Conexion;
 use Clases\Status;
-
+use Clases\Usuario;
 
 session_start(); #iniciamos sesión
+
+$usuario = $_SESSION['usuario'];
 
 
 $conn = new Conexion();
@@ -19,6 +21,8 @@ if ($_SERVER["REQUEST_METHOD"]== "GET"){
 
 
     $statusHab = new Status();
+    $usu = new Usuario();
+    if (!($usu -> existeUsuario($usuario, $id_hotel))){
     $estadoHabitacion = $statusHab->statusHabitacion($id_hotel, $id_habitacion);
 
     // Mostrar el resultado de la consulta
@@ -34,5 +38,5 @@ if ($_SERVER["REQUEST_METHOD"]== "GET"){
 } else {
     echo "No se proporcionó un ID válido.";
 }
-
+}
 $conn->cerrar($conn);

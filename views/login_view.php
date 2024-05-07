@@ -5,8 +5,7 @@
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!--bootstrap 4 -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
    <style> 
    body {
@@ -61,12 +60,14 @@
     <title>Iniciar sesión</title>
 </head>
 <div class="login-container">
-    <body>   
+    <body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 <h1>PerfectRoom</h1>
 
         <form id="login" method="post" onsubmit="return validateLogin()">
             <input type="text" name="id_hotel" id= "id_hotel" placeholder="id_hotel">
-            <input type="text" name="username" id= "username" placeholder="Usuario">
+            <input type="text" name="usuario" id= "usuario" placeholder="Usuario">
             <input type="password" name="password" id="password" placeholder="Contraseña">
             <button type="submit" class="btn btn-info" role="button">Iniciar sesión</button>
 
@@ -77,12 +78,12 @@
 
     <script>
 function validateLogin() {
-    var username = document.getElementById('username').value;
+    var usuario = document.getElementById('usuario').value;
     var password = document.getElementById('password').value;
     var id_hotel = document.getElementById('id_hotel').value;
 
     // Validación básica del lado del cliente
-    if (username.trim() === '' || password.trim() === '') || id_hotel.trim() === '')  {
+    if (usuario.trim() === '' || password.trim() === '') || id_hotel.trim() === '')  {
         document.getElementById('errorMessage').textContent = 'Por favor, introduce un nombre de usuario, contraseña e identificador de su establecimiento.';
         document.getElementById('errorMessage').style.display = 'block';
         return false;

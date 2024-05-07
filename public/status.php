@@ -7,16 +7,17 @@ use Clases\Status;
 
 session_start();
 
-$username = $_SESSION['username'];
+$usuario = $_SESSION['usuario'];
 $id_hotel = $_SESSION['id_hotel'];
 $usu = new Usuario();
-if ($usu->TipoUsuario($username)) {
+if ($usu->TipoUsuario($usuario)) {
     echo "Acceso Denegado";
     header('Location: login.php');
 
 } else {
 echo "<body>
-<p><center>Bienvenido/a ".$_SESSION['username']."</center></p>
+<p><b><a href='../views/dashboard_view.php'>Volver </a></center></b></p>
+<p><center>Bienvenido/a ".$_SESSION['usuario']."</center></p>
 <p><center>del hotel ".$_SESSION['id_hotel']."</center></p>";
 
 include("../views/status_view.php");
@@ -69,13 +70,15 @@ if ($cantidadHabitaciones !== false){
         echo "<tr>";
         echo "<th scope='col'>Total Habitaciones ocupadas revisadas: " . $cantidadHabitacionesOcupadaOk . "</th>";
         echo "</tr>";
+       
     }    
    
-    
+   
 
 else {
     echo "No se encontraron datos de habitaciones para el hotel.";
 }
 
-}
+} 
+
 
