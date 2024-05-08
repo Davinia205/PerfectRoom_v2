@@ -18,7 +18,7 @@ img {
 
 
 @media (max-width: 600px) {
-    .update-container {
+    .delete-container {
         width: 100%;
         padding: 15px;
     }
@@ -26,30 +26,22 @@ img {
 </style>
 
 <body>
-<div class="update-container">
+<div class="delete-container">
 <img src="../views/images/room.jpg">
 <br></br>
-    <b><p>Actualización de Usuario:</p></b>
+    <b><p>Eliminar Usuario:</p></b>
     <!-- <form action="../public/inspeccion_ocupada.php" method="post"> -->
         
-    <form id="update" method="post">
+    <form id="delete" method="post">
     <div class="form-group">
         <input type="text" class="form-control"name="id_hotel" id= "id_hotel" placeholder="id_hotel" required>
         <br></br>
         <input type="text" class="form-control"name="usuario" id= "usuario" placeholder="Usuario" required>
         <br></br>
-        <input type="text" class="form-control"name="nombre" id="nombre" placeholder="Nombre" required>
-        <br></br>
-        <input type="text"class="form-control" name="apellidos" id="apellidos" placeholder="Apellidos" required>
-        <br></br>
-        <select name="tipo"class="form-control" id="tipo">
-        <option value="" disabled selected class="form-control">Tipo</option>
-        <option value="Administrador">Administrador</option>
-        <option value="Usuario Limpieza">Usuario Limpieza</option>
-    </select>
-        <br></br>
-        <input type="text" class="form-control"name="cargo" id="cargo" placeholder="Cargo" required>
-        <br></br>
         <center><input type="submit" class="btn btn-info" role="button" name="enviar">  <a href="../views/dashboard_view.php" class="btn btn-info" role="button"> Volver  </a>   <a href="../view/login_view.php" class="btn btn-info" role="button"> Salir   </a> 
 </a></center>
     </form>
+
+  
+
+

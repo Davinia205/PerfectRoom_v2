@@ -54,7 +54,7 @@ img {
     <a href="../public/crearUsuario.php" class="btn btn-info" role="button"> Crear Usuario</a>
     <br></br>
     <br></br>
-    <a href="../public/usuarioUpdate.php" class="btn btn-info" role="button"> Actualizar Usuario</a>
+    <a href="../public/borrarUsuario.php" class="btn btn-info" role="button"> Borrar Usuario</a>
     <br></br>
     <br></br>
     <a href="../public/index.html" class="btn btn-info" role="button">  Salir</a>

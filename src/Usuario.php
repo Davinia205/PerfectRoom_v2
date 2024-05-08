@@ -190,21 +190,7 @@ class Usuario extends Conexion
             if ($stmt->rowCount() > 0) return true;
             return false;
         }
-        // function existeIdEmpleado($id_empleado, $id_hotel)
-        // {
-        //     $consulta = "select * from usuarios where id_empleado= :ie and id_hotel = ih";
-        //     $stmt = $this->conexion->prepare($consulta);
-        //     try {
-        //         $stmt->execute([
-        //             ':ie' => $id_empleado,
-        //             'ih' => $id_hotel
-        //            ]);
-        //     } catch (PDOException $ex) {
-        //         die("El empleado no es correcto: " . $ex->getMessage());
-        //     }
-        //     if ($stmt->rowCount() < 1) return true;
-        //     return false;
-        // }
+    
 
         function TipoUsuario($usuario)
         {
@@ -219,36 +205,24 @@ class Usuario extends Conexion
             if ($stmt = 'Usuario Limpieza') return false;
             return true;
         }
-        public function updateUsuario($nuevo_nombre,$usuario, $id_hotel)
-        // $nuevo_apellidos, $nuevo_cargo, $nuevo_tipo, $usuario, $id_hotel)
+  
+        function borrarUsuario($usuario, $id_hotel)
         {
+            $consulta = "delete from usuarios where usuario=:u and id_hotel=:i";
+            $stmt = $this->conexion->prepare($consulta);
             try {
-                $sql = "UPDATE usuarios 
-                        SET nombre = ':nuevo_nombre'
-                            -- apellidos = ':nuevo_apellidos',
-                            -- cargo = ':nuevo_cargo',
-                            -- tipo = ':nuevo_tipo'
-                        WHERE (usuario = :usuario) AND id_hotel = :id_hotel)";
-                    
-                $stmt = $this->conexion->prepare($sql);
-                
                 $stmt->execute([
-                    // ':nuevo_nombre' => $nuevo_nombre,
-                    // ':nuevo_apellidos' => $nuevo_apellidos,
-                    // ':nuevo_cargo' => $nuevo_cargo,
-                    // ':nuevo_tipo' => $nuevo_tipo,
-                    ':nuevo_nombre' => $nuevo_nombre,
-                    ':usuario' => $this -> usuario,
-                    ':id_hotel' => $this-> id_hotel
-
-
+                    ':u' => $usuario,
+                    ':i' => $id_hotel
+                    
                 ]);
-        
-                echo "Actualización realizada correctamente";
             } catch (PDOException $ex) {
-                die("Error al actualizar el usuario " . $ex->getMessage());
+                die("Error al consultar usuario: " . $ex->getMessage());
             }
-        }
+            if ($stmt->rowCount() == 0) 
+            return true;
+            return false;
+        } 
 }
             
 
