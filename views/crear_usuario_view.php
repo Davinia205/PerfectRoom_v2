@@ -16,6 +16,15 @@ img {
            max-width:100%;
 }
 
+.btn {
+    border: none;
+    border-radius: 4px;
+    background-color: #0DCAF0;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
 
 @media (max-width: 600px) {
     .usuario-container {
@@ -32,12 +41,16 @@ img {
 
     <div class="d-flex justify-content-center">
 </div>
+<div id="errorMessage" style="color: red; display: none;"></div>
+    </div>
+<div id="confirmMessage" style="color: green; display: none;"></div>
+    </div>
 <p><b>Complete la siguiente información:<b></p>
 
 <form id="login" method="post" onsubmit="return validateUser()">
             <input type="text" class="form-control"name="id_hotel" id= "id_hotel" placeholder="ID Hotel" required>
             <br></br>
-            <input type="text" class="form-control"name="usuario" id= "usuario" placeholder="Usuario" required>
+            <input type="text" class="form-control"name="usuario" id= "usuario" placeholder="Nuevo Usuario" required>
             <br></br>
             <input type="password" class="form-control"name="password" id="password" placeholder="Contraseña" required>
             <br></br>
@@ -51,7 +64,13 @@ img {
             <option value="Usuario Limpieza">Usuario Limpieza</option>
         </select>
             <br></br>
-            <input type="text" class="form-control"name="cargo" id="cargo" placeholder="Cargo" required>
+            <select name="cargo"class="form-control" id="cargo">
+            <option value="" disabled selected class="form-control">Cargo</option>
+            <option value="Camerero/a de Pisos">Camarero/a de Pisos</option>
+            <option value="Director/a">Director/a</option>
+            <option value="Gobernanta/e">Gobernanta/e</option>
+            <option value="Subgobernanta">Subgobernante</option>
+        </select>
             <br></br>
             <center><input type="submit" class="btn btn-info" role="button" name="enviar">  <a href="../views/dashboard_view.php" class="btn btn-info" role="button"> Volver  </a>   <a href="../views/login_view.php" class="btn btn-info" role="button"> Salir   </a> 
     </a></center>

@@ -1,5 +1,5 @@
 <?php
-#clase que permite realizar una inspección en una habitación ocupada
+
 namespace Clases;
 require '../vendor/autoload.php';
 
@@ -8,6 +8,9 @@ use PDO;
 use PDOException;
 
 class Inspeccion_ocupada extends Conexion{
+    /**
+     * #clase que permite realizar una inspección en una habitación ocupada
+     */
     
     public $id_hotel;
     public $id_habitacion;
@@ -163,8 +166,11 @@ class Inspeccion_ocupada extends Conexion{
 
         return $this;
     }
-    #insertamos en la base de datos los valores para la tabla checklist_ocupada
+ 
     public function insertar_inspeccion_ocupada() {
+        /**
+         *    #insertamos en la base de datos los valores para la tabla checklist_ocupada
+         */
         try {
             $sql = "INSERT INTO checklist_ocupada (id_habitacion, ropa_sucia, papeleras, camas, polvo, suelo, toallas, minibar, amenities, olor, usuario, servicio, fecha, id_hotel) 
                     VALUES (:id_habitacion, :ropa_sucia, :papeleras, :camas, :polvo, :suelo, :toallas, :minibar, :amenities, :olor, :usuario, :servicio, :fecha, :id_hotel)";
@@ -190,17 +196,19 @@ class Inspeccion_ocupada extends Conexion{
 
                 ]);
             
-            echo "Datos insertados correctamente";
         } catch (PDOException $e) {
             die("Error al insertar datos");
-            #die("Error al insertar datos: " . $e->getMessage());
+         
         }
     }
 
     public function updateHabitaciones($id_habitacion, $id_hotel){
+      /**
+     * #método que permite actualizar el estado de la habitación una vez realizada la inspección    
 
+     */
         try {
-            $sql = "UPDATE habitaciones SET estado = 'ok' WHERE (id_habitacion = :id_habitacion) AND id_hotel = :id_hotel";
+            $sql = "UPDATE habitaciones SET estado = 'revisada', fecha = current_timestamp() WHERE (id_habitacion = :id_habitacion) AND id_hotel = :id_hotel";
                 
             $stmt = $this->conexion->prepare($sql);
             
@@ -209,32 +217,33 @@ class Inspeccion_ocupada extends Conexion{
 
                     ':id_habitacion' => $this->id_habitacion,
                     ':id_hotel' => $this -> id_hotel]);
-                    echo "Actualización realizada correctamente";
         }
         catch (PDOException $ex) {
             die("Error al actualizar estado: " . $ex->getMessage());
     }
 
 }
-#método que permite actualizar el estado ocupada de la habitación una vez realizada la inspección    
 public function updateOcupada($id_habitacion, $situacion){
+    /**
+     * #método que permite actualizar el estado de la habitación, si es de salida o está ocupada
+     */
 
     try {
-        // Prepare the SQL query with placeholders
+        
         $sql = "UPDATE habitaciones SET ocupada = :situacion WHERE id_habitacion = :id_habitacion";
         
-        // Prepare the SQL statement
+
         $stmt = $this->conexion->prepare($sql);
         
-        // Bind parameters and execute the statement
+
         $stmt->execute([
             ':id_habitacion' => $id_habitacion, // Use the passed $id_habitacion parameter
             ':situacion' => $situacion // Use the passed $situacion parameter
         ]);
-        echo "<br></br>Actualización estado Ocupada realizada correctamente<br></br>";
+   
       
     } catch (PDOException $ex) {
-        // Handle any errors that occur during the database operation
+   
         die("Error al actualizar estado: " . $ex->getMessage());
     }
 }

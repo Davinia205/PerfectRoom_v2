@@ -1,5 +1,7 @@
 <?php
-#clase que permite establecer conexión con la base de datos
+
+  
+ 
 namespace Clases;
 
 use PDO;
@@ -7,6 +9,9 @@ use PDOException;
 
 class Conexion
 {
+    /**
+     * clase que permite establecer conexión con la base de datos
+     */
     private $host;
     private $db;
     private $username;
@@ -16,6 +21,9 @@ class Conexion
 
     public function __construct()
     {
+        /**
+         * Contructor de la conexión con la base de datos
+         */
         $this->host = "localhost";
         $this->db = "perfectroom";
         $this->username = "gestor";
@@ -26,6 +34,9 @@ class Conexion
 
     public function crearConexion()
     {
+        /**
+         * método que establece la conexión con la base de datos
+         */
         try {
             $this->conexion = new PDO($this->dsn, $this->username, $this->password);
             $this->conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -37,6 +48,9 @@ class Conexion
 
 
 public function cerrar(&$con){
+    /**
+     * método para cerrar la conexión con la base de datos
+     */
     $con = null;
    }
 }

@@ -51,7 +51,11 @@ cursor: pointer;
 <div class="inspeccion-container">
 <img src="../views/images/room.jpg">
 <br></br>
-    <b><p>Rellene los datos de la Inspección:</p></b>
+<div id="errorMessage" style="color: red; display: none;"></div>
+    </div>
+    <div id="confirmMessage" style="color: green; display: none;"></div>
+    </div>
+    <b><p>Rellene los datos de la Inspección de Salida:</p></b>
     <form id="login" method="post" onsubmit="return validateUser()">
     <div class="form-group">
         <p>Realizada por(introduzca usuario) <input type="text" class="form-control" name="usuario" id="usuario" required></p><br>
@@ -188,8 +192,7 @@ cursor: pointer;
         </div>
     </div>
     </form>
-    <div id="errorMessage" style="color: red; display: none;"></div>
-    </div>
+   
 </div>
 </body>
 <script>

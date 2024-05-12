@@ -1,5 +1,5 @@
 <?php
-#Esta clase sirve para obtener los datos reflejados en status.php
+
 namespace Clases;
 require '../vendor/autoload.php';
 
@@ -8,12 +8,18 @@ use PDO;
 use PDOException;
 
 class Status extends Conexion{
+    /**
+     * #Esta clase sirve para obtener los datos reflejados en status.php
+     */
 
     
 
 
 public function totalHabitaciones($id_hotel)
 {
+    /**
+     * método para obtener el total de habitaciones del hotel
+     */
     $consulta = "SELECT cant_habitaciones FROM hotel WHERE id_hotel = :id_hotel";
     $stmt = $this->conexion->prepare($consulta);
     
@@ -34,7 +40,10 @@ public function totalHabitaciones($id_hotel)
 }
 public function habitacionesok($id_hotel)
 {
-    $consulta = "SELECT count(id_habitacion) AS cant_habitaciones FROM habitaciones WHERE id_hotel = :id_hotel and estado= 'ok'";
+    /**
+     * método para obtener el número de habitaciones que han sido revisadas
+     */
+    $consulta = "SELECT count(id_habitacion) AS cant_habitaciones FROM habitaciones WHERE id_hotel = :id_hotel and estado= 'revisada'";
     $stmt = $this->conexion->prepare($consulta);
     
     try {
@@ -53,7 +62,10 @@ public function habitacionesok($id_hotel)
 
 public function habitacionesNoOk($id_hotel)
 {
-    $consulta = "SELECT count(id_habitacion) AS cant_habitaciones FROM habitaciones WHERE id_hotel = :id_hotel and estado != 'ok'";
+      /**
+     * método para obtener el número de habitaciones que no han sido revisadas
+     */
+    $consulta = "SELECT count(id_habitacion) AS cant_habitaciones FROM habitaciones AS cant_habitaciones WHERE id_hotel = :id_hotel and estado = 'sin revisar'";
     $stmt = $this->conexion->prepare($consulta);
     
     try {
@@ -72,7 +84,10 @@ public function habitacionesNoOk($id_hotel)
 
 public function habitacionesSalidanoOk($id_hotel)
 {
-    $consulta = "SELECT count(id_habitacion) AS cant_habitaciones FROM habitaciones WHERE id_hotel = :id_hotel and estado != 'ok' and salida = 'sí'";
+      /**
+     * método para obtener el número de habitaciones de salida que no han sido revisadas
+     */
+    $consulta = "SELECT count(id_habitacion) AS cant_habitaciones FROM habitaciones WHERE id_hotel = :id_hotel and estado = 'sin revisar' and salida = 'sí'";
     $stmt = $this->conexion->prepare($consulta);
     
     try {
@@ -91,6 +106,9 @@ public function habitacionesSalidanoOk($id_hotel)
 
 public function habitacionesSalidaOk($id_hotel)
 {
+     /**
+     * método para obtener el número de habitaciones de salida que  han sido revisadas
+     */
     $consulta = "SELECT count(id_habitacion) AS cant_habitaciones FROM habitaciones WHERE id_hotel = :id_hotel and estado = 'ok' and salida = 'sí'";
     $stmt = $this->conexion->prepare($consulta);
     
@@ -110,6 +128,9 @@ public function habitacionesSalidaOk($id_hotel)
 
 public function habitacionesOcupadaNoOk($id_hotel)
 {
+     /**
+     * método para obtener el número de habitaciones ocupadas que no han sido revisadas
+     */
     $consulta = "SELECT count(id_habitacion) AS cant_habitaciones FROM habitaciones WHERE id_hotel = :id_hotel and estado != 'ok' and ocupada = 'sí'";
     $stmt = $this->conexion->prepare($consulta);
     
@@ -130,6 +151,9 @@ public function habitacionesOcupadaNoOk($id_hotel)
 
 public function habitacionesOcupadaOk($id_hotel)
 {
+     /**
+     * método para obtener el número de habitaciones de ocupadas que  han sido revisadas
+     */
     $consulta = "SELECT count(id_habitacion) AS cant_habitaciones FROM habitaciones WHERE id_hotel = :id_hotel and estado = 'ok' and ocupada = 'sí'";
     $stmt = $this->conexion->prepare($consulta);
     
@@ -150,7 +174,10 @@ public function habitacionesOcupadaOk($id_hotel)
 
 public function statusHabitacion($id_hotel, $id_habitacion)
 {
-    $consulta = "SELECT estado FROM habitaciones WHERE id_hotel = :id_hotel AND id_habitacion = :id_habitacion";
+     /**
+     * método para obtener el estado de una habitación en concreto
+     */
+    $consulta = "SELECT estado, fecha FROM habitaciones WHERE id_hotel = :id_hotel AND id_habitacion = :id_habitacion";
     $stmt = $this->conexion->prepare($consulta);
     
     
@@ -163,8 +190,8 @@ public function statusHabitacion($id_hotel, $id_habitacion)
         
         $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
         
-        if ($resultado !== false && isset($resultado['estado'])) {
-            return $resultado['estado']; // Return the room status
+        if ($resultado !== false && isset($resultado['estado'] ) && isset($resultado['fecha'])) {
+            return $resultado; // Return the room status
         } else {
             return null; // Room status not found
         }
@@ -173,9 +200,49 @@ public function statusHabitacion($id_hotel, $id_habitacion)
         die("Error al recuperar datos: " . $ex->getMessage());
     }
 }
+
+function estadoSalida($id_hotel, $id_habitacion)
+{
+     /**
+     * método para confirmar si el estado de la habitación a inspeccionar es de salida
+     */
+    $consulta = "select * from habitaciones WHERE id_habitacion=:ih AND id_hotel=:i AND salida='sí'";
+    $stmt = $this->conexion->prepare($consulta);
+    try {
+        $stmt->execute([
+            ':ih' => $id_habitacion,
+            ':i' => $id_hotel
+
+        ]);
+    } catch (PDOException $ex) {
+        die("Habitación ocupada: " . $ex->getMessage());
+    }
+    if ($stmt->rowCount() > 0)
+        return true;
+    return false;
 }
 
- /**
-  * Get the value of totalHabitaciones
-  */ 
+function estadoOcupada($id_hotel, $id_habitacion)
+{
+      /**
+     * método para confirmar si el estado de la habitación a inspeccionar es ocupada
+     */
+    $consulta = "select * from habitaciones WHERE id_habitacion=:ih AND id_hotel=:i AND ocupada='sí'";
+    $stmt = $this->conexion->prepare($consulta);
+    try {
+        $stmt->execute([
+            ':ih' => $id_habitacion,
+            ':i' => $id_hotel
+
+        ]);
+    } catch (PDOException $ex) {
+        die("Habitación de salida: " . $ex->getMessage());
+    }
+    if ($stmt->rowCount() > 0)
+        return true;
+    return false;
+}
+}
+
+ 
  

@@ -53,6 +53,8 @@
         <input type="text" class="form-control" id="id_hotel" name="id_hotel">
         <label for="registroId">Número de habitación:</label>
         <input type="text" class="form-control"id="id_habitacion" name="id_habitacion">
+        <label for="registroId">Número de habitación:</label>
+        <input type="text" class="form-control"id="planta" name="planta">
         <button type="submit"class="btn">Buscar</button>
 </form>
 </div>
@@ -67,12 +69,13 @@
                 
                 var id_hotel = $('#id_hotel').val();
                 var id_habitacion = $('#id_habitacion').val();
-
+                var planta = $('#planta').val();
                 $.ajax({
                     url: 'status_habitacion.php',
                     type: 'GET',
                     data: { id_hotel: id_hotel,
-                        id_habitacion: id_habitacion
+                        id_habitacion: id_habitacion,
+                        planta: planta
                      },
                     success: function(response) {
                         $('#resultadoRegistro').html(response);

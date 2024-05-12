@@ -8,6 +8,9 @@ use PDO;
 use PDOException;
 
 class Inspeccion_salida extends Conexion{
+     /**
+     * #clase que permite realizar una inspección en una habitación de salida
+     */
 
 public $id_hotel;
 public $id_habitacion;    
@@ -360,8 +363,11 @@ $this->fecha = $fecha;
 
 return $this;
 }
-#insertamos en la base de datos los valores para la tabla checklist_salida
+
 public function insertar_inspeccion_salida() {
+    /**
+     * #insertamos en la base de datos los valores para la tabla checklist_salida
+     */
     try {
         $sql = "INSERT INTO checklist_salida (id_habitacion, puertas, interruptores, mobiliario, griferia, cortinas, paredes, objetos, telefono, television,
         papeleras, camas, polvo, suelo, toallas, minibar, amenities, olor, usuario, servicio, fecha, id_hotel )        
@@ -401,7 +407,6 @@ public function insertar_inspeccion_salida() {
 
             ]);
         
-        echo "Datos insertados correctamente";
     } catch (PDOException $e) {
         die("Error al insertar datos: " . $e->getMessage());
     }
@@ -409,9 +414,12 @@ public function insertar_inspeccion_salida() {
 
 
 public function updateHabitaciones($id_habitacion, $id_hotel){
+    /**
+     * método que actualiza el estado de la habitación en la tabla habitaciones de la base de datos
+     */
 
     try {
-        $sql = "UPDATE habitaciones SET estado = 'ok' WHERE (id_habitacion = :id_habitacion) AND id_hotel = :id_hotel";
+        $sql = "UPDATE habitaciones SET estado = 'revisada', fecha = current_timestamp() WHERE (id_habitacion = :id_habitacion) AND id_hotel = :id_hotel";
             
         $stmt = $this->conexion->prepare($sql);
         
@@ -420,17 +428,20 @@ public function updateHabitaciones($id_habitacion, $id_hotel){
 
                 ':id_habitacion' => $this->id_habitacion,
                 ':id_hotel' => $this -> id_hotel]);
-                echo "Actualización realizada correctamente";
+   
     }
     catch (PDOException $ex) {
         die("Error al actualizar estado: " . $ex->getMessage());
 }
 }
-#método que permite actualizar el estado salida de la habitación una vez realizada la inspección
+
 public function updateSalida($id_habitacion, $situacion){
+    /**
+     * #método que permite actualizar el estado salida de la habitación
+     */
 
     try {
-        // Prepare the SQL query with placeholders
+   
         $sql = "UPDATE habitaciones SET salida = :situacion WHERE id_habitacion = :id_habitacion";
         
         // Prepare the SQL statement
@@ -441,7 +452,7 @@ public function updateSalida($id_habitacion, $situacion){
             ':id_habitacion' => $id_habitacion, // Use the passed $id_habitacion parameter
             ':situacion' => $situacion // Use the passed $situacion parameter
         ]);
-        echo "Actualización estado Salida realizada correctamente";
+   
 
     } catch (PDOException $ex) {
         // Handle any errors that occur during the database operation

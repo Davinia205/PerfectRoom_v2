@@ -6,7 +6,9 @@ use Clases\Usuario;
 
 use Clases\Inspeccion_salida;
 
+use Clases\Hotel;
 
+use Clases\Status;
 
 session_start();
 
@@ -15,7 +17,7 @@ echo "<p><center>Bienvenido/a ".$_SESSION['usuario']."</center></p>";
 include ("../views/inspeccion_salida_view.php"); #incluimos la vista que contiene el formulario para que el usuario realice un chequeo de salida.
 
 
-if (!isset($_SESSION['usuario'])) {
+if (!isset($_SESSION['usuario'] )) {
     // Redirigir a la página de login
     header("Location: login.php");
     exit; // Asegurarse de que el script se detenga después de redirigir
@@ -77,26 +79,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $inspeccion_salida->setTelevision($television);
     $inspeccion_salida->setTelefono($telefono);
     $inspeccion_salida->setFecha($fecha);
+    $planta = trim($_POST['planta']);
   
     $usu = new Usuario();
+    $hot = new Hotel();
+    $status_1 = new Status();
 
-    if ($usu->existeUsuario($usuario, $id_hotel)) {
+    if ($usu->existeUsuario($usuario, $id_hotel ) && $hot-> existeHabitacion($id_hotel, $id_habitacion, $planta ) && $status_1-> estadoOcupada($id_hotel, $id_habitacion) ) {
         
     
 
         $inspeccion_salida-> insertar_inspeccion_salida(); #insertamos inspección de salida si el usuario existe en la base de datos
         $inspeccion_salida-> updateHabitaciones($id_habitacion, $id_hotel); #actualizamos estado de la habitación
+
+        echo '<script>
+        document.getElementById("confirmMessage").textContent = "Inspección realizada correctamente";
+        document.getElementById("confirmMessage").style.display = "block";
+      </script>';
          
         } else {
             #mostramos mensaje de error
         
             echo '<script>
-                        document.getElementById("errorMessage").textContent = "Usuario no existe. Por favor, intenta de nuevo.";
+                        document.getElementById("errorMessage").textContent = "Datos introducidos incorrectos. Por favor, intenta de nuevo.";
                         document.getElementById("errorMessage").style.display = "block";
                       </script>';
          
         
         }
 
-
+      
 }

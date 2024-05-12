@@ -2,6 +2,8 @@
 require '../vendor/autoload.php';
 use Clases\Inspeccion_ocupada;
 use Clases\Usuario;
+use Clases\Hotel;
+use Clases\Status;
 
 
 session_start();
@@ -36,6 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $olor = trim($_POST['olor']);
     $usuario = trim($_POST['usuario']);
     $fecha = date('d/m/Y');
+    $planta = trim($_POST['planta']);
     #echo $fecha;
 
     $inspeccion_ocupada = new Inspeccion_ocupada();  
@@ -70,12 +73,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     // print($olor);
     
     $usu = new Usuario();
-    if ($usu->existeUsuario($usuario, $id_hotel )) { #si el usuario que va a realizar la inspección existe en la base de datos se realiza el chequeo
+    $hot = new Hotel();
+    $status_1 = new Status();
+    if ($usu->existeUsuario($usuario, $id_hotel) && $hot-> existeHabitacion($id_hotel, $id_habitacion, $planta) && $status_1-> estadoOcupada($id_hotel, $id_habitacion)  ) { #si el usuario que va a realizar la inspección existe en la base de datos se realiza el chequeo
         
     
     $inspeccion_ocupada-> insertar_inspeccion_ocupada();
     
-    
+
+  echo '<script>
+  document.getElementById("confirmMessage").textContent = "Inspección realizada correctamente";
+  document.getElementById("confirmMessage").style.display = "block";
+</script>';
 
     $inspeccion_ocupada-> updateHabitaciones($id_habitacion, $id_hotel); #actualizamos el estado de la habitación
      
@@ -83,13 +92,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
          #mostramos mensaje de error
     
         echo '<script>
-                    document.getElementById("errorMessage").textContent = "Usuario no existe. Por favor, intenta de nuevo.";
+                    document.getElementById("errorMessage").textContent = "Datos introducidos incorrectos. Por favor, intenta de nuevo.";
                     document.getElementById("errorMessage").style.display = "block";
                   </script>';
      
     
     }
-
 
     
 

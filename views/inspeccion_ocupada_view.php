@@ -50,9 +50,12 @@ img {
 
 <div class="inspeccion-container">
 <img src="../views/images/room.jpg">
+<div id="errorMessage" style="color: red; display: none;"></div>
+    </div>
+<div id="confirmMessage" style="color: green; display: none;"></div>
+    </div>
 <br></br>
-    <b><p>Rellene los datos de la Inspección:</p></b>
-    <!-- <form action="../public/inspeccion_ocupada.php" method="post"> -->
+    <b><p>Rellene los datos de la Inspección Habitación Ocupada:</p></b>
         
     <form id="login" method="post" onsubmit="return validateUser()">
     <div class="form-group">
@@ -130,13 +133,12 @@ img {
         </select>
         <br></br>
         <div class="enviar"> 
-        <center><input type="submit"  role="button" name="enviar" >  <a href="../views/dashboard_view.php" class="btn btn-info" role="button"> Volver  </a>   <a href="../view/login_view.php" class="btn btn-info" role="button"> Salir   </a> 
+        <center><input type="submit" class="btn btn-info" role="button"name="enviar">  <a href="../views/dashboard_view.php" class="btn btn-info" role="button"> Volver  </a>   <a href="../view/login_view.php" class="btn btn-info" role="button"> Salir   </a> 
     </a></center>
         </div>
           
     </form>
-    <div id="errorMessage" style="color: red; display: none;"></div>
-    </div>
+    
 </div>
 </body>
 <script>
@@ -150,11 +152,10 @@ function validateUser() {
         document.getElementById('errorMessage').style.display = 'block';
         return false;
     }
-
+     
     return true; // Envía el formulario si la validación del cliente pasa
 }
 </script>
-
 
 
 </body>

@@ -1,8 +1,9 @@
 <?php
-#clase para realizar operaciones relacionadas con usuarios
 namespace Clases;
+
 require '../vendor/autoload.php';
 use PDOException;
+use PDO;
 
 
 use Clases\Conexion;
@@ -10,12 +11,15 @@ use Clases\Conexion;
 
 class Usuario extends Conexion
 {
+    /** 
+     *clase para realizar operaciones relacionadas con usuarios
+    */
     public $usuario;
     public $password;
-    
+
     public $nombre;
     public $apellidos;
-    
+
     public $tipo;
 
     public $cargo;
@@ -26,36 +30,44 @@ class Usuario extends Conexion
     {
         parent::__construct();
     }
-   
-    public function gettipo(){
+
+    public function gettipo()
+    {
         return $this->tipo;
     }
-    public function settipo($tipo){
-        $this->tipo=$tipo;
+    public function settipo($tipo)
+    {
+        $this->tipo = $tipo;
     }
-    public function getusuario(){
+    public function getusuario()
+    {
         return $this->usuario;
     }
-    public function setusuario($usuario){
-        $this->usuario=$usuario;
+    public function setusuario($usuario)
+    {
+        $this->usuario = $usuario;
     }
 
-    public function getpassword(){
+    public function getpassword()
+    {
         return $this->password;
     }
-    public function setpassword($password){
-        $this->password=$password;
+    public function setpassword($password)
+    {
+        $this->password = $password;
     }
-    public function getcargo(){
+    public function getcargo()
+    {
         return $this->cargo;
     }
-    public function setcargo($cargo){
-        $this->cargo=$cargo;
+    public function setcargo($cargo)
+    {
+        $this->cargo = $cargo;
     }
-    
-     /**
+
+    /**
      * Get the value of nombre
-     */ 
+     */
     public function getNombre()
     {
         return $this->nombre;
@@ -65,7 +77,7 @@ class Usuario extends Conexion
      * Set the value of nombre
      *
      * @return  self
-     */ 
+     */
     public function setNombre($nombre)
     {
         $this->nombre = $nombre;
@@ -75,7 +87,7 @@ class Usuario extends Conexion
 
     /**
      * Get the value of apellidos
-     */ 
+     */
     public function getApellidos()
     {
         return $this->apellidos;
@@ -85,7 +97,7 @@ class Usuario extends Conexion
      * Set the value of apellidos
      *
      * @return  self
-     */ 
+     */
     public function setApellidos($apellidos)
     {
         $this->apellidos = $apellidos;
@@ -95,7 +107,7 @@ class Usuario extends Conexion
 
     /**
      * Get the value of id_empleado
-     */ 
+     */
 
 
     public function getId_hotel()
@@ -107,7 +119,7 @@ class Usuario extends Conexion
      * Set the value of id_hotel
      *
      * @return  self
-     */ 
+     */
     public function setId_hotel($id_hotel)
     {
         $this->id_hotel = $id_hotel;
@@ -117,6 +129,9 @@ class Usuario extends Conexion
 
     public function isValido($u, $p, $ih)
     {
+        /**
+         * método para confirmar que las claves introducidas son correctas
+         */
         $pass1 = hash('sha256', $p);
         $consulta = "select * from usuarios where usuario=:u AND password=:p AND id_hotel=:ih";
         $stmt = $this->conexion->prepare($consulta);
@@ -129,30 +144,35 @@ class Usuario extends Conexion
         } catch (PDOException $ex) {
             die("Error al consultar usuario: " . $ex->getMessage());
         }
-        if ($stmt->rowCount() ==  0) return false;
+        if ($stmt->rowCount() == 0)
+            return false;
         return true;
     }
 
-    function crearUsuario(){
+    function crearUsuario()
+    {
+        /**
+         * método para insertar un usuario en la base de datos
+         */
         $insert = "insert into usuarios values(:u, :p, :c, :t, :n, :a, :ih )";
         $stmt = $this->conexion->prepare($insert);
-    
-        try{
+
+        try {
             $stmt->execute([
                 ':u' => $this->usuario,
                 ':p' => $this->password,
                 ':c' => $this->cargo,
                 ':t' => $this->tipo,
-                ':n' => $this -> nombre,
-                ':a' => $this-> apellidos,
-                ':ih' => $this-> id_hotel
-                
-               
+                ':n' => $this->nombre,
+                ':a' => $this->apellidos,
+                ':ih' => $this->id_hotel
+
+
             ]);
-              
-        } catch (PDOException $ex){
-    
-        
+
+        } catch (PDOException $ex) {
+
+
             die("Ocurrio un error al insertar el usuario:" . $ex->getMessage());
         }
     }
@@ -160,72 +180,61 @@ class Usuario extends Conexion
 
 
 
-    function existeUsuario($usuario, $id_hotel)
+    function existeUsuario($new_Usuario, $id_hotel)
     {
+        /**
+         * método para comprobar si existe un usuario
+         */
         $consulta = "select * from usuarios where usuario=:u and id_hotel=:i";
         $stmt = $this->conexion->prepare($consulta);
         try {
             $stmt->execute([
-                ':u' => $usuario,
+                ':u' => $new_Usuario,
                 ':i' => $id_hotel
-                
+
             ]);
         } catch (PDOException $ex) {
             die("Error al consultar usuario: " . $ex->getMessage());
         }
-        if ($stmt->rowCount() == 0) return true;
+        if ($stmt->rowCount() > 0)
+            return true;
         return false;
     }
-               
-        function existeHotel($id_hotel)
-        {
-            $consulta = "select * from hotel where id_hotel= :ih";
-            $stmt = $this->conexion->prepare($consulta);
-            try {
-                $stmt->execute([
-                    ':ih' => $id_hotel    ]);
-            } catch (PDOException $ex) {
-                die("El código de hotel no es correcto: " . $ex->getMessage());
-            }
-            if ($stmt->rowCount() > 0) return true;
-            return false;
-        }
-    
 
-        function TipoUsuario($usuario)
-        {
-            $consulta = "select tipo from usuarios where usuario=:u";
+    public function tipoUsuario($usuario)
+    {
+        /**
+         * método para verificar si un usuario es Administrador
+         */
+        $consulta = "SELECT * FROM usuarios WHERE usuario= :u AND tipo= 'Administrador'";
+        $stmt = $this->conexion->prepare($consulta);
+
+
+        try {
             $stmt = $this->conexion->prepare($consulta);
-            try {
-                $stmt->execute([
-                    ':u' => $usuario    ]);
-            } catch (PDOException $ex) {
-                die("El usuario ya existe: " . $ex->getMessage());
-            }
-            if ($stmt = 'Usuario Limpieza') return false;
-            return true;
+            $stmt->execute([
+                ':u' => $usuario
+      
+                
+
+            ]);
+         
+            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($stmt->rowCount() > 0) {
+                return true; // devolver el estado
+            } else {
+                 return false; // estado no encontrado
+             }
+        } catch (PDOException $ex) {
+            // Log del error
+            die("Error al recuperar datos: " . $ex->getMessage());
         }
-  
-        function borrarUsuario($usuario, $id_hotel)
-        {
-            $consulta = "delete from usuarios where usuario=:u and id_hotel=:i";
-            $stmt = $this->conexion->prepare($consulta);
-            try {
-                $stmt->execute([
-                    ':u' => $usuario,
-                    ':i' => $id_hotel
-                    
-                ]);
-            } catch (PDOException $ex) {
-                die("Error al consultar usuario: " . $ex->getMessage());
-            }
-            if ($stmt->rowCount() == 0) 
-            return true;
-            return false;
-        } 
+    }
+
 }
-            
 
-   
+
+
 
 
